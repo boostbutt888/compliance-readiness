@@ -24,7 +24,11 @@ function defaultFw(p){return screenAll(p).filter(s=>s.lvl==="required"||s.lvl===
 let items=[];
 let mode="local", col=null;
 let exampleWork=clone(EXAMPLE);
-const CFG_DEFAULT={firm:"Parang",email:"",phone:"",rate:1200,response:"within 1 working day",showCost:true};
+/* Contact details shown on the website and used for "Email Parang". Fill these in. */
+const SITE_CONTACT={email:"",phone:""};
+/* On the website (not inside Claude) downloads save real files and email buttons open the visitor's mail app */
+const ON_SITE=!(window.claude&&window.claude.use);
+const CFG_DEFAULT={firm:"Parang",email:SITE_CONTACT.email,phone:SITE_CONTACT.phone,rate:1200,response:"within 1 working day",showCost:true};
 let cfg=(()=>{try{return {...CFG_DEFAULT,...JSON.parse(localStorage.getItem("iso27k-cfg")||"{}")}}catch(e){return {...CFG_DEFAULT}}})();
 let isConsultant=false, leadsRemote=[], leadsMode="local", deskTab="leads", curLead=null, leadSent={};
 let view="home", cur=null, step="profile", repTab="overview", soaFilter="all", soaTheme="all", libTab="frameworks", libQ="", libFam="all", pendingDelete=null;
@@ -434,7 +438,7 @@ function renderReport(){
      <p>${costLine}</p>${funds.length?`<p class="meta">${funds.map(k=>esc(FUNDING[k])).join(" ")}</p>`:""}<p class="meta">Indicative only. A consultant will confirm scope, cost and timeline after a free 30-minute review of your answers.</p></div>
      <div class="cta-act"><a class="btn" href="#contact" id="ctaBtn">Talk to a consultant</a>${isConsultant?`<button class="btn ghost" type="button" id="previewBrief">Consultant brief</button>`:""}</div>
    </section>
-   <div class="exports"><button class="btn plain" type="button" id="dlReport">Download report</button><button class="btn plain" type="button" id="dlGaps">Download gap register (.csv)</button>${a.fw.includes("iso27001")?`<button class="btn plain" type="button" id="dlCsv">Download ISO 27001 SoA (.csv)</button>`:""}<span class="toast" id="toast" aria-live="polite"></span></div>
+   <div class="exports">${ON_SITE?`<a class="btn plain" id="mailSummary" href="${esc(mailtoHref("",`Compliance readiness: ${nameOf(a)}`,summaryText(a,pf)))}">Email a summary</a>`:""}<button class="btn plain" type="button" id="dlReport">Download report</button><button class="btn plain" type="button" id="dlGaps">Download gap register (.csv)</button>${a.fw.includes("iso27001")?`<button class="btn plain" type="button" id="dlCsv">Download ISO 27001 SoA (.csv)</button>`:""}<span class="toast" id="toast" aria-live="polite"></span></div>
    <div class="tabs" role="tablist" aria-label="Report sections" id="repTabs">${tabs.map(([k,l])=>`<button role="tab" type="button" data-rtab="${k}" aria-selected="${repTab===k}">${esc(l)}</button>`).join("")}</div>
    <div id="repBody" class="panel">${body}</div>
    ${contactCard(cur)}
@@ -490,8 +494,31 @@ async function offer(filename,data,clipFallback){
       t.className="toast err";t.textContent="Download isn't available here"}
     return;
   }
+  if(ON_SITE&&saveFile(filename,data)){t.textContent="Downloaded";return}
   if(clipFallback){try{await navigator.clipboard.writeText(clipFallback);t.textContent="Downloads aren't available here, so the CSV was copied instead";return}catch(e){}}
   t.className="toast err";t.textContent="Downloads aren't available in this view";
+}
+function saveFile(filename,data){
+  try{
+    const csv=/\.csv$/i.test(filename);
+    const blob=new Blob([csv?"\ufeff"+data:data],{type:csv?"text/csv;charset=utf-8":"text/html;charset=utf-8"});
+    const url=URL.createObjectURL(blob);const link=document.createElement("a");
+    link.href=url;link.download=filename;link.style.display="none";document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),5000);return true;
+  }catch(e){return false}
+}
+/* Email: opens the visitor's own mail app with the message filled in */
+function mailtoHref(to,subject,body){return `mailto:${encodeURIComponent(to||"").replace(/%40/g,"@")}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.replace(/\n/g,"\r\n"))}`}
+function siteLink(){try{if(!/^https?:/.test(location.protocol))return"";return location.origin+location.pathname.replace(/check\.html$/,"")}catch(e){return""}}
+function summaryText(a,pf){
+  const lines=[`${nameOf(a)}: compliance readiness summary`,`${a.profile.industry}, ${a.profile.size} staff`,"",
+    `Overall readiness: ${a.skipCheck?"not checked":pf.readiness+"%"}. About ${pf.months} months to complete all chosen frameworks.`,"","Frameworks:"];
+  pf.res.forEach(r=>lines.push(`- ${r.f.short} (${LEVELS[r.level]||r.level}): ${a.skipCheck?"":r.readiness+"% ready, "}about ${r.months} months${r.ext&&r.ext.hi>0?`, audit fees ${range(r.ext)}`:""}`));
+  lines.push("","Top gaps to close:");
+  pf.gaps.slice(0,4).forEach((g,i)=>lines.push(`${i+1}. ${short(g.q)} (${g.pr})`));
+  lines.push("","Estimates are indicative. The full report can be downloaded from the check.");
+  const link=siteLink();if(link)lines.push("",`Readiness check by Parang: ${link}`);
+  return lines.join("\n");
 }
 
 /* ===================== Contact form (prospect) ===================== */
@@ -526,9 +553,9 @@ function sentHtml(a,s){
   if(s.direct)return `<div><span class="eyebrow">Sent</span><h2>Thanks, ${esc(s.name)}. Your assessment is with ${esc(firm)}.</h2></div>
     <p style="margin:0">A consultant will contact you ${esc(cfg.response||"shortly")}. Your reference is <span class="mono sel">${esc(s.ref)}</span>.</p>`;
   return `<div><span class="eyebrow">One more step</span><h2>Send your reference code to ${esc(firm)}</h2></div>
-    <p style="margin:0;max-width:64ch">This page can't send your answers directly from here. Copy the message below, which holds your answers and contact details, and send it by email or WhatsApp.</p>
+    <p style="margin:0;max-width:64ch">${ON_SITE?`Tap <strong>Email ${esc(firm)}</strong> to open your email with the message below already filled in, then press send. It holds your answers and contact details.`:"This page can't send your answers directly from here. Copy the message below, which holds your answers and contact details, and send it by email or WhatsApp."}</p>
     <textarea class="code" id="codeBox" rows="5" readonly aria-label="Message with reference code">${esc(msg)}</textarea>
-    <div class="exports"><button class="btn" type="button" id="copyCode">Copy message</button>${wa?`<a class="btn ghost" href="${esc(wa)}" target="_blank" rel="noopener">Open WhatsApp</a>`:""}<span class="toast" id="codeToast" aria-live="polite"></span></div>
+    <div class="exports">${ON_SITE?`<a class="btn" href="${esc(mailtoHref(cfg.email,`Readiness check: ${nameOf(a)}`,msg))}">Email ${esc(firm)}</a>`:""}<button class="btn${ON_SITE?" plain":""}" type="button" id="copyCode">Copy message</button>${wa?`<a class="btn ghost" href="${esc(wa)}" target="_blank" rel="noopener">Open WhatsApp</a>`:""}<span class="toast" id="codeToast" aria-live="polite"></span></div>
     ${(cfg.email||cfg.phone)?`<p class="meta" style="margin:0">Send to: ${cfg.email?`<span class="sel">${esc(cfg.email)}</span>`:""}${cfg.email&&cfg.phone?" · ":""}${cfg.phone?`<span class="sel">${esc(cfg.phone)}</span>`:""}</p>`:""}`;
 }
 function wireContact(a){
