@@ -120,9 +120,9 @@ const payPill=(k,who)=>k==="parang"?`<span class="pay P-us">Parang</span>`:`<spa
 function payBlock(pf){
   const third=pf.res.filter(r=>r.ext&&r.ext.hi>0);
   return `<section class="card paycard"><h2>Who you pay</h2>
-   <p style="margin:0;max-width:70ch">Only consulting goes to Parang. Audits, certificates, ratings and tools are paid by you, directly, to independent providers. Rules for certification bodies stop them from consulting for the companies they certify, so they are always a separate firm.</p>
+   <p style="margin:0;max-width:70ch">Only consulting goes to Parang. Audits, certificates, ratings and tools are paid by you, directly, to independent providers. The figures below are typical for those providers. Rules for certification bodies stop them from consulting for the companies they certify, so they are always a separate firm.</p>
    <div class="payrows">
-     <div class="payrow us"><div class="ph">${payPill("parang")}<strong>${range(pf.consult)}</strong></div><span>Consulting: gap fixes, policies, risk assessment, internal audit and audit support. The first 30-minute review is free; the rest is a fixed-fee proposal.</span></div>
+     <div class="payrow us"><div class="ph">${payPill("parang")}<strong>Competitive fixed fee</strong></div><span>Consulting: gap fixes, policies, risk assessment, internal audit and audit support. The first 30-minute review is free. After that we agree a fixed fee sized to your scope and budget, with no obligation. Our team is led by industry veterans who have done this work on the ground, and we steer you away from work and purchases you don't need.</span></div>
      ${third.map(r=>`<div class="payrow"><div class="ph">${payPill("third",r.ext.who)}<strong>${range(r.ext)}</strong></div><span><b>${esc(r.f.short)}</b>: ${esc(r.ext.label)}. ${esc(r.ext.how||"")}</span></div>`).join("")}
      ${pf.toolSum.hi>0?`<div class="payrow"><div class="ph">${payPill("third",TOOL_WHO)}<strong>${range(pf.toolSum)}</strong></div><span>Tools some gaps need, such as device management or log monitoring. You choose and buy them; we help you compare options.</span></div>`:""}
    </div></section>`;
@@ -355,7 +355,7 @@ function gapList(gaps,showFw){return gaps.map(g=>`<div class="gap"><span class="
    ${showFw&&g.fws.length?`<div class="ctrls"><span class="meta">Closes gaps in</span>${fwChips(g.fws)}</div>`:""}</div></div>`).join("")||`<p class="muted">No gaps.</p>`}
 
 function overviewBody(a,pf,interactive){
-  const rows=pf.res.map(r=>`<tr${interactive?` class="click" data-rtab="${r.f.id}" tabindex="0"`:""}><td><strong>${esc(r.f.short)}</strong><span class="why">${esc(r.f.kind)}</span></td><td>${lvlPill(r.level)}</td><td style="min-width:120px">${bar(r.readiness)}</td><td class="num">${r.gaps.length}</td><td class="num">~${r.months} mo</td><td class="num">${range(r.fees)}</td><td class="num">${r.ext&&r.ext.hi>0?range(r.ext):"—"}</td></tr>`).join("");
+  const rows=pf.res.map(r=>`<tr${interactive?` class="click" data-rtab="${r.f.id}" tabindex="0"`:""}><td><strong>${esc(r.f.short)}</strong><span class="why">${esc(r.f.kind)}</span></td><td>${lvlPill(r.level)}</td><td style="min-width:120px">${bar(r.readiness)}</td><td class="num">${r.gaps.length}</td><td class="num">~${r.months} mo</td><td class="num">${r.ext&&r.ext.hi>0?range(r.ext):"—"}</td></tr>`).join("");
   const w=waves(pf);
   const multi=pf.gaps.filter(g=>g.fws.length>1).length;
   return `${situationCard(a,pf)}
@@ -366,11 +366,11 @@ function overviewBody(a,pf,interactive){
      <div class="tile"><span class="v">~${pf.months}<span style="font-size:1rem;font-weight:600"> mo</span></span><span class="k">To complete all (indicative)</span></div>
    </div>
    <section class="card"><h2>Frameworks at a glance</h2>${interactive?'<p class="meta" style="margin:0">Select a row for the detail.</p>':""}
-     <div class="tablewrap"><table><thead><tr><th>Framework</th><th>Status</th><th>Readiness</th><th class="num">Gaps</th><th class="num">Time</th><th class="num">Parang fees</th><th class="num">Paid to auditors</th></tr></thead><tbody>${rows}</tbody></table></div>
-     <p class="meta" style="margin:0">Figures are for each framework on its own. "Parang fees" is our consulting. "Paid to auditors" goes directly to the independent certification body, auditor or assessor, not to Parang. Doing several frameworks together lowers Parang's fees: see below.</p></section>
+     <div class="tablewrap"><table><thead><tr><th>Framework</th><th>Status</th><th>Readiness</th><th class="num">Gaps</th><th class="num">Time</th><th class="num">Audit fees, paid to them</th></tr></thead><tbody>${rows}</tbody></table></div>
+     <p class="meta" style="margin:0">Audit fees go directly to the independent certification body, auditor or assessor, not to Parang. Parang's consulting is quoted separately as a competitive fixed fee after the free review.</p></section>
    ${payBlock(pf)}
    <section class="card"><h2>Answer once, use many times</h2>
-     <p style="margin:0">${pf.shared.length} of your ${pf.ids.length} practices count towards more than one framework, and ${multi} of the gaps close several at once. Running the frameworks as one programme saves about <strong>${Math.round(pf.saved)} consultant days (${money(pf.saved*pf.rate,1000)})</strong> compared with separate projects.</p></section>
+     <p style="margin:0">${pf.shared.length} of your ${pf.ids.length} practices count towards more than one framework, and ${multi} of the gaps close several at once. Running the frameworks as one programme cuts about <strong>${pf.standalone?Math.round(pf.saved/pf.standalone*100):0}% of the effort</strong> compared with separate projects, and that saving is reflected in our fee.</p></section>
    <section class="card"><h2>Suggested order</h2><div class="phases">${w.map(x=>`<div class="phase"><span class="when">Months ${x.from}–${x.to}</span><h3>${esc(x.name)}</h3><ul>${x.rs.map(r=>`<li>${esc(r.f.short)}</li>`).join("")}</ul></div>`).join("")}</div></section>
    <section class="card"><h2>Gaps to close, ranked</h2><p class="meta" style="margin:0">Ranked by impact, raised where a required framework depends on them. Each shows which frameworks it moves forward.</p><div>${interactive&&pf.gaps.length>10?`${gapList(pf.gaps.slice(0,10),true)}<details class="more"><summary>Show the other ${pf.gaps.length-10} gaps</summary>${gapList(pf.gaps.slice(10),true)}</details>`:gapList(pf.gaps,true)}</div></section>
    ${obligations(a).length?`<section class="card"><h2>Other obligations flagged</h2><div class="oblig">${obligations(a).map(([t,d])=>`<div><strong>${t}</strong><span class="muted" style="font-size:.93rem">${d}</span></div>`).join("")}</div></section>`:""}
@@ -379,7 +379,7 @@ function overviewBody(a,pf,interactive){
 function situationCard(a,pf){
   const it=a.intake||{},dl=deadlineMonths(it.deadline),B=budgetMax(it.budget),notes=[];
   if(a.skipCheck)notes.push(`<div class="note">You skipped the self-check, so these figures assume you're partly there on every practice. <button class="linkbtn" type="button" data-step="practice">Do the self-check</button> for sharper numbers.</div>`);
-  if(B!==Infinity){const bl=(BUDGETS.find(b=>b[0]===it.budget)||[])[1];notes.push(pf.year1.hi<=B?`<div class="note ok">Fits your budget of ${esc(bl)}.</div>`:pf.year1.lo<=B?`<div class="note warn">Your budget of ${esc(bl)} covers the lower end of the estimate. Phasing keeps you within it.</div>`:`<div class="note warn">The estimate is above your budget of ${esc(bl)}. We'd phase the work: required items first, the rest next financial year.</div>`)}
+  if(B!==Infinity){const bl=(BUDGETS.find(b=>b[0]===it.budget)||[])[1];notes.push(`<div class="note">Your budget: ${esc(bl)}. We'll shape the plan around it in the free review, phasing the work if needed so you start with what matters most.</div>`)}
   if(it.lead==="none")notes.push(`<div class="note warn">No internal lead yet. Plan for about ${commitment(pf)} hours a week from someone inside the business.</div>`);
   const rows=dl!==Infinity?pf.res.map(r=>{const fz=feas(r.f,r.months,dl);return `<tr><td><strong>${esc(r.f.short)}</strong></td><td><span class="feas F-${fz.st}">${FEAS_LABEL[fz.st]}</span></td><td class="num">~${r.months} mo</td><td>${fz.st==="ok"?"On track if you start now":esc((INTERIM[r.f.id]||["Discuss a narrower first scope"])[0])}</td></tr>`}).join(""):"";
   if(!notes.length&&!rows)return"";
@@ -399,7 +399,7 @@ function fwBody(a,r,interactive){
        <div class="tablewrap"><table><thead><tr><th>Control</th><th>Title and justification</th><th>Applies</th><th>Status</th></tr></thead><tbody id="soaBody">${interactive?"":soaRows(r.iso.rows)}</tbody></table></div></section>`;
   }
   const cost=`<div class="tablewrap"><table class="cost"><thead><tr><th>Item</th><th>Paid to</th><th class="num">Low</th><th class="num">High</th></tr></thead><tbody>
-     <tr><td>Consulting, ${r.days} days at ${money(Number(cfg.rate)||1200,50)}/day</td><td>${payPill("parang")}</td><td class="num">${money(r.fees.lo)}</td><td class="num">${money(r.fees.hi)}</td></tr>
+     <tr><td>Consulting</td><td>${payPill("parang")}</td><td colspan="2">${esc(PARANG_PITCH)}</td></tr>
      ${r.ext&&r.ext.hi>0?`<tr><td>${esc(r.ext.label)}</td><td>${payPill("third",r.ext.who)}</td><td class="num">${money(r.ext.lo)}</td><td class="num">${money(r.ext.hi)}</td></tr>`:r.ext?`<tr><td>${esc(r.ext.label)}</td><td>${payPill("third",r.ext.who)}</td><td class="num" colspan="2">not yet required</td></tr>`:`<tr><td>No external audit or certificate</td><td>—</td><td class="num">—</td><td class="num">—</td></tr>`}
      ${r.recur?`<tr class="sub"><td>${esc(r.recur.label)}</td><td>${payPill("third",r.recur.who)}</td><td class="num">${money(r.recur.lo)}/yr</td><td class="num">${money(r.recur.hi)}/yr</td></tr>`:""}
    </tbody></table></div>
@@ -411,7 +411,7 @@ function fwBody(a,r,interactive){
      <div class="tile lead"><span class="v">${r.readiness}%</span><span class="k">Readiness</span></div>
      <div class="tile"><span class="v">${r.gaps.length}</span><span class="k">Gaps (${r.gaps.filter(g=>g.pr==="High").length} high)</span></div>
      <div class="tile"><span class="v">~${r.months}<span style="font-size:1rem;font-weight:600"> mo</span></span><span class="k">To complete, on its own</span></div>
-     <div class="tile"><span class="v">${range(r.fees)}</span><span class="k">Parang fees, on its own${r.ext&&r.ext.hi>0?`. Plus ${range(r.ext)} paid to the auditor`:""}</span></div>
+     <div class="tile"><span class="v">${r.ext&&r.ext.hi>0?range(r.ext):"None"}</span><span class="k">${r.ext&&r.ext.hi>0?"Audit fees, paid to the auditor":"No external audit fee"}</span></div>
    </div>
    <section class="card">${expectBlock(f,r)}</section>
    <section class="card"><h2>Readiness by ${f.id==="iso27001"?"Annex A theme":"requirement area"}</h2>${domainBars(f.id==="iso27001"&&r.iso?r.iso.themes:r.doms)}</section>
@@ -424,7 +424,7 @@ function renderReport(){
   const a=effA(cur);const pf=portfolio(a);
   if(repTab!=="overview"&&!a.fw.includes(repTab))repTab="overview";
   const firm=cfg.firm||"our consultants";
-  const costLine=cfg.showCost?`For a ${esc(a.profile.size)}-staff ${esc(a.profile.industry.toLowerCase())} business at your readiness, the ${pf.res.length} framework${pf.res.length===1?"":"s"} you chose typically take about <strong>${pf.months} months</strong>. First-year cost: <strong>${range(pf.consult)}</strong> in Parang consulting fees${pf.ext.hi>0?`, plus <strong>${range(pf.ext)}</strong> paid directly to independent auditors and certification bodies`:""}${pf.toolSum.hi>0?`, and about <strong>${range(pf.toolSum)}</strong> for tools from vendors you choose`:""}.`:`For a business like yours, the frameworks you chose typically take about <strong>${pf.months} months</strong>.`;
+  const costLine=cfg.showCost?`For a ${esc(a.profile.size)}-staff ${esc(a.profile.industry.toLowerCase())} business at your readiness, the ${pf.res.length} framework${pf.res.length===1?"":"s"} you chose typically take about <strong>${pf.months} months</strong>. ${pf.ext.hi>0?` Independent audit and certification fees are typically <strong>${range(pf.ext)}</strong>, paid directly to them`:""}${pf.toolSum.hi>0?`${pf.ext.hi>0?", plus":" Tools typically cost"} about <strong>${range(pf.toolSum)}</strong> for tools from vendors you choose`:""}${pf.ext.hi>0||pf.toolSum.hi>0?".":""} Parang's own fee is competitive and agreed with you after a free review. Our team is led by industry veterans who clear the roadblocks, so you don't spend time and money on work you don't need.`:`For a business like yours, the frameworks you chose typically take about <strong>${pf.months} months</strong>.`;
   const funds=[...new Set(pf.res.map(r=>r.f.fund).filter(Boolean))];
   const tabs=[["overview","Overview"],...pf.res.map(r=>[r.f.id,r.f.short])];
   const body=repTab==="overview"?overviewBody(a,pf,true):fwBody(a,pf.res.find(r=>r.f.id===repTab),true);
@@ -467,7 +467,7 @@ function setRepTab(k){
 const fileBase=a=>(a.profile.name||"Assessment").replace(/[\\/:*?"<>|]+/g," ").trim().slice(0,80);
 const csvq=s=>`"${String(s).replace(/"/g,'""')}"`;
 function soaCsv(r){return ["Control,Title,Theme,Applicable,Justification,Status",...r.rows.map(x=>[`A.${x.id}`,csvq(x.name),x.theme,x.app?"Yes":"No",csvq(x.app?(x.why||"Required to treat identified risks"):x.why),cap(x.st)].join(","))].join("\n")}
-function gapCsv(a,pf){return ["Priority,Practice,Area,Current status,Effort,Consultant days,Frameworks",...pf.gaps.map(g=>[g.pr,csvq(g.q),csvq(g.area),cap(g.st),csvq(EFFORT[g.e]),g.days,csvq(g.fws.map(id=>FW_BY_ID[id].short).join("; "))].join(","))].join("\n")}
+function gapCsv(a,pf){return ["Priority,Practice,Area,Current status,Effort,Frameworks",...pf.gaps.map(g=>[g.pr,csvq(g.q),csvq(g.area),cap(g.st),csvq(EFFORT[g.e]),csvq(g.fws.map(id=>FW_BY_ID[id].short).join("; "))].join(","))].join("\n")}
 function exportShell(title,inner){
   const css=document.querySelector("style").textContent;
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title>
@@ -652,7 +652,7 @@ function renderSettings(){
       <div class="field"><label for="s-rate">Consultant day rate (S$)</label><input type="number" id="s-rate" min="300" max="5000" step="50" value="${esc(cfg.rate)}"></div>
     </div>
     <div class="field"><label for="s-resp">Response promise shown to prospects</label><input type="text" id="s-resp" value="${esc(cfg.response)}"></div>
-    <label class="consent"><input type="checkbox" id="s-show" ${cfg.showCost?"checked":""}> Show the indicative first-year cost range to prospects</label>
+    <label class="consent"><input type="checkbox" id="s-show" ${cfg.showCost?"checked":""}> Show indicative audit and tool costs to prospects (Parang's own fees are never shown)</label>
     <div class="exports"><button class="btn" type="submit">Save settings</button><span class="toast" id="cfgToast" aria-live="polite"></span></div></form>`;
   $("#cfgForm").addEventListener("submit",async ev=>{ev.preventDefault();const t=$("#cfgToast");
     const rate=Number($("#s-rate").value);

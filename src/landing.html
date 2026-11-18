@@ -212,6 +212,14 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
 .payees dd{margin:0;color:var(--muted)}
 @media (max-width:560px){.payees{grid-template-columns:1fr;gap:2px}.payees dd{margin-bottom:10px}}
 .mnote{margin-top:16px}
+.mpitch{margin:0;padding-top:14px;border-top:1px solid var(--line);font-weight:600}
+
+.roads{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 24px}
+@media (max-width:860px){.roads{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.roads{grid-template-columns:1fr}}
+.roads div{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.roads .tile{margin-bottom:4px}
+.roads p{color:var(--muted);font-size:.95rem}
 </style>
 
 <header class="bar">
@@ -221,6 +229,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <span>Parang</span>
     </a>
     <nav class="links" aria-label="Sections">
+      <a class="opt" href="#roadblocks">Roadblocks</a>
       <a class="opt" href="#how">How it works</a>
       <a class="opt" href="#cover">What we cover</a>
       <a class="opt" href="#working">Working with us</a>
@@ -237,7 +246,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <div class="hero-copy">
         <span class="eyebrow">Parang · Risk and compliance consultancy · Singapore</span>
         <h1>Sharpen your operations. <em>Go after the market precisely and decisively.</em></h1>
-        <p class="lede">Parang gets your security, privacy, resilience and sustainability in shape, so you can win the customers and tenders that ask for proof. Start with a free 15-minute check: which of 21 standards apply to you, how ready you are, and what it takes to get there.</p>
+        <p class="lede">Parang gets your security, privacy, resilience and sustainability in shape, clearing the roadblocks so you don't spend time and money on work you don't need. Start with a free 15-minute check: which of 21 standards apply to you, how ready you are, and what it takes to get there.</p>
         <div class="ctas"><a class="btn" href="check.html">Start the free check <svg class="ic sm" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn ghost" href="#how">See how it works</a></div>
         <ul class="assure"><li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>No sign-up</li><li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Answers stay in your browser</li><li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Plain language, no jargon</li></ul>
       </div>
@@ -265,12 +274,26 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <div class="whycopy">
         <span class="eyebrow">Why "Parang"</span>
         <h2 id="why-h">“Parang” is the Malay working blade. Kept sharp, it clears the path ahead.</h2>
-        <p class="lede">That's our job. We cut through the acronyms, sharpen the way your business runs, and leave you ready to move on the opportunities that ask for proof: the tender, the enterprise customer, the regulator, the investor.</p>
+        <p class="lede">That's our job. We clear the roadblocks that waste time and money when the know-how isn't in-house, sharpen the way your business runs, and leave you ready to move on the opportunities that ask for proof: the tender, the enterprise customer, the regulator, the investor. Our team is led by industry veterans who have done this work on the ground, and our fees are competitive.</p>
         <div class="trio">
           <div><span class="tile c-green"><svg class="ic" aria-hidden="true"><use href="#i-blade"/></svg></span><h3>Sharpen</h3><p>Fix the gaps that matter, in the order that matters.</p></div>
           <div><span class="tile c-rose"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg></span><h3>Precise</h3><p>Only the standards you need, scoped to the work you're chasing.</p></div>
           <div><span class="tile c-orange"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span><h3>Decisive</h3><p>Clear costs, timelines and a plan you can act on now.</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="roadblocks" aria-labelledby="road-h">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">Roadblocks we clear</span><h2 id="road-h">Don't pay for what you don't need.</h2><p class="lede">Without the right know-how, compliance projects drift: the wrong standard, too much scope, tools nobody asked for, audits failed for missing records. We've seen these before, so you don't have to learn them the expensive way.</p></div>
+      <div class="roads">
+        <div><span class="tile c-rose"><svg class="ic" aria-hidden="true"><use href="#i-target"/></svg></span><h3>Chasing the wrong standard</h3><p>We confirm what your customer, tender or regulator actually accepts before you commit to anything.</p></div>
+        <div><span class="tile c-orange"><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg></span><h3>Scoping too wide</h3><p>Certify the service or site that wins the work first. A tighter scope is faster and cheaper to run.</p></div>
+        <div><span class="tile c-purple"><svg class="ic" aria-hidden="true"><use href="#i-coins"/></svg></span><h3>Buying tools you don't need</h3><p>Many controls can be met with what you already have. We tell you when a purchase is genuinely required.</p></div>
+        <div><span class="tile c-teal"><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg></span><h3>Doing the same work twice</h3><p>One set of policies and evidence can serve several standards. We build it once and map it across.</p></div>
+        <div><span class="tile c-blue"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg></span><h3>Failing the audit on paperwork</h3><p>We check your evidence before the auditor does, so findings don't send you back for another round.</p></div>
+        <div><span class="tile c-indigo"><svg class="ic" aria-hidden="true"><use href="#i-hourglass"/></svg></span><h3>Missing the deadline</h3><p>We plan backwards from your date and line up interim evidence the buyer will accept.</p></div>
       </div>
     </div>
   </section>
@@ -304,7 +327,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
         <div><span class="tile c-blue"><svg class="ic" aria-hidden="true"><use href="#i-checklist"/></svg></span><h3>What applies to you</h3><p>Each framework marked required, requested, recommended or optional, with the reason in plain words.</p></div>
         <div><span class="tile c-green"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg></span><h3>Readiness for each one</h3><p>A score by requirement area, from your own answers. For ISO 27001, a draft Statement of Applicability for all 93 controls.</p></div>
         <div><span class="tile c-orange"><svg class="ic" aria-hidden="true"><use href="#i-ranked"/></svg></span><h3>Gaps, ranked</h3><p>What to fix first, how much effort it takes, and which standards each fix moves forward.</p></div>
-        <div><span class="tile c-purple"><svg class="ic" aria-hidden="true"><use href="#i-coins"/></svg></span><h3>Cost and time</h3><p>Parang's consulting fees, and the fees you'd pay independent auditors and tool vendors, shown separately with months to complete.</p></div>
+        <div><span class="tile c-purple"><svg class="ic" aria-hidden="true"><use href="#i-coins"/></svg></span><h3>Cost and time</h3><p>What you'd pay independent auditors and tool vendors, and how many months it takes. Our own fee is a competitive fixed price we agree with you.</p></div>
         <div><span class="tile c-teal"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></span><h3>Deadline and budget fit</h3><p>Whether your plan fits, and what to do if it doesn't: phasing, a narrower scope, or interim evidence.</p></div>
         <div><span class="tile c-indigo"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg></span><h3>Downloads</h3><p>The full report, a gap register and an ISO 27001 Statement of Applicability you can share internally.</p></div>
       </div>
@@ -350,6 +373,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
             <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Gap fixes, policies, risk assessments and staff briefings</li>
             <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Internal audit and support through your external audit</li>
           </ul>
+          <p class="mpitch">Competitive fees, agreed with you once we understand your scope. Our team is led by industry veterans who have done this work on the ground, so you avoid paying for work you don't need.</p>
         </div>
         <div class="mcard them">
           <div class="mtop"><span class="tile lg c-indigo"><svg class="ic" aria-hidden="true"><use href="#i-seal"/></svg></span><div><span class="eyebrow">Paid by you, directly to them</span><h3>Independent auditors and providers</h3></div></div>
@@ -400,8 +424,9 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <div class="faq">
         <details><summary>Is the check really free?</summary><p>Yes. The check, the report and the downloads are free, with no sign-up. You only talk to us if you choose to send your report.</p></details>
         <details><summary>What happens to my answers?</summary><p>They're saved in your own browser on this device. Nothing is sent to us unless you fill in the contact form and choose to send it.</p></details>
+        <details><summary>How much does Parang charge?</summary><p>It depends on your scope, so we don't publish a price list. After the free 30-minute review we give you a competitive fixed-fee proposal, sized to what you actually need and your budget, with no obligation.</p></details>
         <details><summary>Are the audit and certification fees paid to Parang?</summary><p>No. Parang only charges for consulting. Certification bodies, audit firms, assessors, rating providers and tool vendors are independent of us, and you pay them directly. Each report shows Parang's fees and third-party fees on separate lines.</p></details>
-        <details><summary>How accurate are the cost and time estimates?</summary><p>They're indicative, based on your company size and how ready you say you are. We confirm scope and give a fixed fee after the free review and evidence check.</p></details>
+        <details><summary>How accurate are the cost and time estimates?</summary><p>They're indicative, based on your company size and how ready you say you are. Auditor and tool prices vary by provider, and we'll help you compare real quotes.</p></details>
         <details><summary>Do I need to be technical?</summary><p>No. The questions are in plain language. If you're not sure, answer "Partly" and we'll check it together.</p></details>
         <details><summary>We only need one certificate. Is this overkill?</summary><p>Use the Direct route: pick the one you need, answer a few scoping questions, and skip straight to a quote if you like.</p></details>
         <details><summary>A customer gave us a deadline that seems impossible.</summary><p>Use the Deadline route. It shows whether the deadline is realistic and what interim evidence buyers usually accept, such as a CSA mark, a SOC 2 Type I report or a signed project plan.</p></details>

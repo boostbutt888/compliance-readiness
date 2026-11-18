@@ -320,3 +320,4 @@ const PAYEE={
 const RECUR_WHO={ghg:"Carbon accounting software vendor you choose",pci:"An Approved Scanning Vendor (ASV)",soc2:"A licensed CPA firm",ecovadis:"EcoVadis"};
 const TOOL_WHO="Software and service vendors you choose";
 const PARANG_WHO="Parang";
+const PARANG_PITCH="Competitive fixed fee, agreed with you after the free review. Our team is led by industry veterans who have done this work on the ground, and we clear the roadblocks so you don't spend time and money on work you don't need.";

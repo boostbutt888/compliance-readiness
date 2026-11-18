@@ -129,7 +129,7 @@ function expectBlock(f,r){
   const j=journeyFor(f);
   return `<div class="journey"><h3>What you're getting into</h3><ol class="jlist">${j.map(([s,d])=>`<li><span>${esc(s)}</span>${d?`<span class="meta">${esc(d)}</span>`:""}</li>`).join("")}</ol>
    <dl class="kv small">
-     <dt>Paid to Parang</dt><dd>Consulting: ${range(r.fees)}</dd>
+     <dt>Paid to Parang</dt><dd>Consulting. ${esc(PARANG_PITCH)}</dd>
      <dt>Paid directly to others</dt><dd>${r.ext&&r.ext.hi>0?`${esc(r.ext.who)}: ${esc(r.ext.label)}, ${range(r.ext)}. ${esc(r.ext.how||"")}`:r.ext?`${esc(r.ext.who||"")}: ${esc(r.ext.label)}`:"No external audit or certificate fee"}</dd>
      ${r.recur?`<dt>Every year after</dt><dd>${esc(r.recur.label)}: ${money(r.recur.lo,500)}–${money(r.recur.hi,500).replace("S$","")}</dd>`:""}
      <dt>If time is short</dt><dd>${(INTERIM[f.id]||["Ask about a narrower first scope"]).map(esc).join(". ")}.</dd>
@@ -252,10 +252,10 @@ function renderPlan(){
      <span>${esc(PLAIN[c.f.id])}</span>
      ${c.why.length?`<ul class="why">${c.why.slice(0,2).map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`:""}
      ${c.gm?`<span class="meta">Matches ${c.gm} of your goals</span>`:""}
-     <span class="facts"><span><b>~${c.r.months} mo</b> to complete</span><span><b>${range(c.r.fees)}</b> Parang fees</span>${c.r.ext&&c.r.ext.hi>0?`<span><b>${range(c.r.ext)}</b> to the auditor</span>`:""}${dl!==Infinity?`<span class="feas F-${fz.st}">${FEAS_LABEL[fz.st]}</span>`:""}</span></label>`};
+     <span class="facts"><span><b>~${c.r.months} mo</b> to complete</span>${c.r.ext&&c.r.ext.hi>0?`<span><b>${range(c.r.ext)}</b> audit fees, paid to the auditor</span>`:`<span>No external audit fee</span>`}${dl!==Infinity?`<span class="feas F-${fz.st}">${FEAS_LABEL[fz.st]}</span>`:""}</span></label>`};
   const tier=(t,title,sub,list)=>list.length?`<section class="tier"><div class="tierhead"><h2>${title}</h2><span class="meta">${sub}</span></div><div class="fwgrid">${list.map(c=>card(c,t)).join("")}</div></section>`:"";
   const B=T.B;const bl=(BUDGETS.find(b=>b[0]===it.budget)||[])[1];
-  const fit=B===Infinity?"":T.spend<=B?`<div class="note ok">The "Start here" step fits your budget of ${esc(bl)}: about ${money(T.spend,1000)} in the first year.</div>`:`<div class="note warn">The required items alone come to about ${money(T.spend,1000)}, above your budget of ${esc(bl)}. Options: spread the work over two financial years, narrow the scope, or use grant support where eligible.</div>`;
+  const fit=B===Infinity?"":`<div class="note">Your budget: ${esc(bl)}. "Start here" is sized with it in mind, and we'll fine-tune the plan to fit when we talk.</div>`;
   const leadNote=it.lead==="none"?`<div class="note warn">You'll need an internal owner. Even with a consultant doing the drafting, someone inside must make decisions and gather evidence: expect a few hours a week.</div>`:"";
   $("#stepview").innerHTML=`<div class="panel">
    <section class="card intro"><h2>Your plan</h2><p style="margin:0">Based on your goals and business, here's where we'd start. Costs and times are first estimates, assuming you're partly there today. The quick check in the next step makes them sharper.</p>${fit}${leadNote}</section>
