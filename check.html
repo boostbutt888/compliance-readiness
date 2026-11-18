@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
-<title>Compliance Readiness Check</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Parang Readiness Check</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -288,14 +289,87 @@ ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;f
 .appnav a.navhome{font:600 .92rem var(--f-body);color:var(--muted);padding:8px 10px;border-radius:var(--r);text-decoration:none}
 .appnav a.navhome:hover{color:var(--fg);background:var(--sunk)}
 .appnav a.navhome:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Parang brand and icon set */
+:root{--blue:#2D6BD2;--blue-s:#E4EDFC;--purple:#7650CC;--purple-s:#EEE8FB;--orange:#CF7A22;--orange-s:#FCEBD8;--teal:#1A8AA0;--teal-s:#DCF1F5;--indigo:#4952C4;--indigo-s:#E6E7FA;--green:#2C8650;--green-s:#DEF1E4;--rose:#C8425A;--rose-s:#FAE3E8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#7FA9F2;--blue-s:#1B2A44;--purple:#B39AF0;--purple-s:#2A2240;--orange:#F0A75C;--orange-s:#3A2A18;--teal:#6CC9DB;--teal-s:#173238;--indigo:#9AA1F2;--indigo-s:#22254A;--green:#74CE96;--green-s:#1A3324;--rose:#F08B9E;--rose-s:#3E1F27}}
+:root[data-theme="dark"]{--blue:#7FA9F2;--blue-s:#1B2A44;--purple:#B39AF0;--purple-s:#2A2240;--orange:#F0A75C;--orange-s:#3A2A18;--teal:#6CC9DB;--teal-s:#173238;--indigo:#9AA1F2;--indigo-s:#22254A;--green:#74CE96;--green-s:#1A3324;--rose:#F08B9E;--rose-s:#3E1F27}
+.logo{width:30px;height:30px;flex:none;border-radius:8px;box-shadow:0 1px 2px rgba(16,40,34,.2)}
+.brand{font-size:1.15rem}
+.ic{width:24px;height:24px;flex:none;display:inline-block;vertical-align:middle}
+.tile{width:40px;height:40px;border-radius:11px;display:inline-grid;place-items:center;flex:none;background:var(--ts);color:var(--tc)}
+.tile.lg{width:48px;height:48px;border-radius:13px}
+.tile.lg .ic{width:27px;height:27px}
+.tile.sm{width:22px;height:22px;border-radius:6px}
+.tile.sm .ic{width:15px;height:15px}
+.c-blue{--tc:var(--blue);--ts:var(--blue-s)}.c-purple{--tc:var(--purple);--ts:var(--purple-s)}.c-orange{--tc:var(--orange);--ts:var(--orange-s)}
+.c-teal{--tc:var(--teal);--ts:var(--teal-s)}.c-indigo{--tc:var(--indigo);--ts:var(--indigo-s)}.c-green{--tc:var(--green);--ts:var(--green-s)}.c-rose{--tc:var(--rose);--ts:var(--rose-s)}
+.famh{display:flex;align-items:center;gap:10px}
+.famh .tile{width:30px;height:30px;border-radius:8px}
+.famh .tile .ic{width:18px;height:18px}
+.how .tile{margin-bottom:6px}
+.pathcard .tile{margin-bottom:4px}
+.libtop{display:flex;gap:12px;align-items:flex-start}
+.routeline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media (max-width:560px){.appnav{flex-wrap:wrap;gap:0;margin-left:0;width:100%}.appnav button,.appnav a.navhome{padding:6px 8px;font-size:.88rem}}
 </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+ <defs>
+  <linearGradient id="g-brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2E9A7F"/><stop offset="1" stop-color="#134A3F"/></linearGradient>
+ </defs>
+ <!-- Brand: a parang blade on a rounded tile -->
+ <symbol id="i-logo" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="8.5" fill="url(#g-brand)"/>
+  <path d="M11.2 18.6 L22.6 7.2 Q25.6 5.6 24.9 9.1 Q22.6 16.6 14.2 21.4 Z" fill="#fff"/>
+  <path d="M11.4 18.9 L22.7 7.5" stroke="#CDEDE3" stroke-width=".7" fill="none" stroke-linecap="round"/>
+  <path d="M6.6 25.4 L10.9 21.1" stroke="#fff" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M10.1 18.2 L13.8 21.9" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+ </symbol>
+ <symbol id="i-blade" viewBox="0 0 24 24">
+  <path d="M8.2 14.2 L17.6 4.8 Q20.4 3.3 19.8 6.4 Q18 12.4 11 16.6 Z" fill="currentColor" stroke="none"/>
+  <path d="M3.8 20.2 L7.6 16.4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+  <path d="M7.2 13.4 L10.6 16.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+ </symbol>
+ <g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+ <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.75" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.6 8.4 13.3 13.3 8.4 15.6 10.7 10.7Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+ <symbol id="i-stopwatch" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V9.6M10 2.8h4M12 2.8V6M18.3 6.8l1.3-1.3"/></g></symbol>
+ <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="8"/><circle cx="11" cy="13" r="4.4"/><path d="M11 13 19.5 4.5M16.4 4.2l3.4.3.3 3.4"/></g><circle cx="11" cy="13" r="1.3" fill="currentColor"/></symbol>
+ <symbol id="i-question" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.8h14a1.8 1.8 0 0 1 1.8 1.8v8.2a1.8 1.8 0 0 1-1.8 1.8h-8.6L6.2 20v-3.4H5a1.8 1.8 0 0 1-1.8-1.8V6.6A1.8 1.8 0 0 1 5 4.8z"/><path d="M10.2 9.2a1.9 1.9 0 1 1 2.6 1.8c-.5.2-.8.6-.8 1.1v.3"/></g><circle cx="12" cy="14.3" r=".95" fill="currentColor"/></symbol>
+ <symbol id="i-scale" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15.5M8 19.5h8M5.5 6.5 12 5l6.5 1.5"/><path d="M5.5 6.5 3 12.2a2.6 2.6 0 0 0 5 0zM18.5 6.5 16 12.2a2.6 2.6 0 0 0 5 0z"/></g></symbol>
+ <symbol id="i-hourglass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h11M6.5 20.5h11M8 3.5c0 4.2 4 5.3 4 8.5s-4 4.3-4 8.5M16 3.5c0 4.2-4 5.3-4 8.5s4 4.3 4 8.5"/></g><path d="M9.6 18.6c.6-1.6 1.6-2.4 2.4-2.4s1.8.8 2.4 2.4z" fill="currentColor"/></symbol>
+ <symbol id="i-checklist" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="3.5" width="15" height="17" rx="2.6"/><path d="M11 8.6h5M11 12.6h5M11 16.6h3.4M7.6 8.6l.8.8 1.3-1.5M7.6 12.6l.8.8 1.3-1.5"/></g><circle cx="8.4" cy="16.6" r=".9" fill="currentColor"/></symbol>
+ <symbol id="i-gauge" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16.5a8 8 0 1 1 16 0"/><path d="M12 16.5l4-5"/><path d="M6.3 11.2l1 .7M12 8.5V9.7M17.7 11.2l-1 .7"/></g><circle cx="12" cy="16.5" r="1.6" fill="currentColor"/></symbol>
+ <symbol id="i-ranked" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19.5V5M10 19.5V9M15 19.5v-6M20 19.5v-3"/></g></symbol>
+ <symbol id="i-coins" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.8" rx="7" ry="2.6"/><path d="M5 6.8v5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-5M5 11.8v5c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-5"/></g></symbol>
+ <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15.2l2 2 4-4.2"/></g></symbol>
+ <symbol id="i-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.8v11M7.5 10.6 12 15l4.5-4.4M5 19.6h14"/></g></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 19.5 6v5.6c0 4.6-3.2 8.2-7.5 9.4-4.3-1.2-7.5-4.8-7.5-9.4V6z"/><path d="M8.8 12.1l2.2 2.2 4.2-4.4"/></g></symbol>
+ <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.3" width="14" height="10.2" rx="2.8"/><path d="M8.5 10.3V7.6a3.5 3.5 0 0 1 7 0v2.7M12 15v1.8"/></g><circle cx="12" cy="14.6" r="1.2" fill="currentColor"/></symbol>
+ <symbol id="i-cycle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.6 12.4a7.6 7.6 0 0 1-13 4.9M4.4 11.6a7.6 7.6 0 0 1 13-4.9"/><path d="M17.8 3.4v3.5h-3.5M6.2 20.6v-3.5h3.5"/></g></symbol>
+ <symbol id="i-cloud" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.2 18.8h9.9a4.1 4.1 0 0 0 .5-8.2 5.6 5.6 0 0 0-10.8-1 4.6 4.6 0 0 0 .4 9.2z"/></g><path d="M12 10.6l.8 2.1 2.1.8-2.1.8-.8 2.1-.8-2.1-2.1-.8 2.1-.8z" fill="currentColor"/></symbol>
+ <symbol id="i-building" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5h17M5.5 20.5V9.6L12 5l6.5 4.6v10.9M9.5 20.5v-4.8h5v4.8M8.6 12h.1M12 12h.1M15.4 12h.1"/></g></symbol>
+ <symbol id="i-leaf" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.6 4.4C10.4 4.2 4.6 9 4.6 16.2c0 1.2.1 2.3.4 3.4 7.4 0 14.6-4 14.6-15.2z"/><path d="M5 19.6c2.8-4.2 6.4-7.6 10.4-9.8"/></g></symbol>
+ <symbol id="i-chat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.8h14a1.8 1.8 0 0 1 1.8 1.8v8.2a1.8 1.8 0 0 1-1.8 1.8h-8.6L6.2 20v-3.4H5a1.8 1.8 0 0 1-1.8-1.8V6.6A1.8 1.8 0 0 1 5 4.8z"/></g><circle cx="8.3" cy="10.7" r="1" fill="currentColor"/><circle cx="12" cy="10.7" r="1" fill="currentColor"/><circle cx="15.7" cy="10.7" r="1" fill="currentColor"/></symbol>
+ <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.2"/><path d="M15.2 15.2 20 20"/></g></symbol>
+ <symbol id="i-sign" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5H7A1.9 1.9 0 0 0 5 5.4v13.2a1.9 1.9 0 0 0 2 1.9h10a1.9 1.9 0 0 0 2-1.9V8.5z"/><path d="M14 3.5v5h5M8.2 16.4c.9-1.6 1.9-1.6 2.4 0 .5 1.5 1.5 1.4 2.4 0 .7-1 1.6-1 2.6.3"/></g></symbol>
+ <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.8 20 8l-8 4.2L4 8z"/><path d="M4 12l8 4.2 8-4.2M4 16l8 4.2 8-4.2"/></g></symbol>
+ <symbol id="i-seal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.4" r="5.8"/><path d="M8.8 14.3 7.6 21l4.4-2.4 4.4 2.4-1.2-6.7M9.6 9.5l1.6 1.6 3.1-3.2"/></g></symbol>
+ <symbol id="i-receipt" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/></g></symbol>
+ <symbol id="i-people" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.4" r="3.1"/><path d="M3.4 19.4c.6-3.1 2.8-5 5.6-5s5 1.9 5.6 5"/><circle cx="16.6" cy="9.4" r="2.4"/><path d="M15.7 14.4c2.5-.3 4.5 1.2 5.1 4.6"/></g></symbol>
+ <symbol id="i-repeat" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 11V9.2a3 3 0 0 1 3-3h11.5M15.6 3l3.4 3.2-3.4 3.2M19.5 13v1.8a3 3 0 0 1-3 3H5M8.4 21 5 17.8l3.4-3.2"/></g></symbol>
+ <symbol id="i-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 19.5 6v5.6c0 4.6-3.2 8.2-7.5 9.4-4.3-1.2-7.5-4.8-7.5-9.4V6z"/><path d="M12 8.4v4.2"/></g><circle cx="12" cy="15.6" r="1" fill="currentColor"/></symbol>
+ <symbol id="i-percent" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M18 6 6 18"/><circle cx="7.6" cy="7.6" r="2.4"/><circle cx="16.4" cy="16.4" r="2.4"/></g></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.3 4.3L19 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+ <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13.5M13 6.5l5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+ </g>
+</svg>
 <header class="appbar">
   <div class="in">
     <button class="brand" type="button" data-nav="home" aria-label="Home">
-      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2 L23 6 V12.5 C23 18.5 18.8 22.6 13 24 C7.2 22.6 3 18.5 3 12.5 V6 Z" fill="var(--accent)"/><path d="M8.5 13 L11.8 16.2 L17.8 9.8" fill="none" stroke="var(--on-accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>Readiness Check <small>Cyber · Privacy · Resilience · ESG</small></span>
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><use href="#i-logo"/></svg>
+      <span>Parang <small>Readiness Check</small></span>
     </button>
     <nav class="appnav" aria-label="Main">
       <a href="index.html" class="navhome">About</a>
@@ -909,7 +983,7 @@ function renderChooser(){
    <div class="wshead">${target?`<div class="crumb"><button class="linkbtn" type="button" data-back-assess>← Back to ${esc(nameOf(cur))}</button></div>`:`<div class="crumb"><button class="linkbtn" type="button" data-nav="home">← All assessments</button></div>`}
      <span class="eyebrow">${target?"Change approach":"New assessment"}</span><h1>How can we help?</h1>
      <p class="muted" style="margin:0;max-width:62ch">Choose the route that fits where you are. ${target?"Your answers so far are kept.":"You can switch later without losing answers."}</p></div>
-   <div class="pathgrid">${["guided","request","direct"].map(k=>{const P=PATHS[k];return `<button class="pathcard" type="button" data-path="${k}">
+   <div class="pathgrid">${["guided","request","direct"].map(k=>{const P=PATHS[k];return `<button class="pathcard" type="button" data-path="${k}">${tile(PATH_IC[k][0],PATH_IC[k][1],"lg")}
      <span class="eyebrow">${esc(P.name)} · ${esc(P.time)}</span><strong class="ptitle">${esc(P.title)}</strong><span class="pdesc">${esc(P.desc)}</span>
      <ul class="plain">${P.gets.map(g=>`<li>${esc(g)}</li>`).join("")}</ul><span class="pgo">Start →</span></button>`}).join("")}</div>
    <p class="meta" style="margin-top:14px">Want to screen everything? <button class="linkbtn" type="button" data-path="full">Run the full check of all ${FRAMEWORKS.length} frameworks</button></p>`;
@@ -965,7 +1039,7 @@ function renderChoose(){
   const sel=new Set(cur.fw||[]);
   $("#stepview").innerHTML=`<div class="panel">
    <section class="card intro"><h2>Which frameworks do you need?</h2><p class="meta" style="margin:0">Tick one or more. Not sure? <button class="linkbtn" type="button" data-switch="guided">Switch to the guided route</button> and keep your answers.</p></section>
-   ${FAMILIES.map(fm=>`<section class="fwfam"><h2>${esc(fm)}</h2><div class="fwgrid">${FRAMEWORKS.filter(f=>f.fam===fm).map(f=>`<label class="fwcard${sel.has(f.id)?" on":""}"><input type="checkbox" data-fw="${f.id}" id="fw-${f.id}" ${sel.has(f.id)?"checked":""}>
+   ${FAMILIES.map(fm=>`<section class="fwfam"><h2 class="famh">${famTile(fm)}${esc(fm)}</h2><div class="fwgrid">${FRAMEWORKS.filter(f=>f.fam===fm).map(f=>`<label class="fwcard${sel.has(f.id)?" on":""}"><input type="checkbox" data-fw="${f.id}" id="fw-${f.id}" ${sel.has(f.id)?"checked":""}>
      <span class="fwtop"><strong>${esc(f.short)}</strong><span class="meta">${esc(f.kind)}</span></span><span class="meta">${esc(PLAIN[f.id])}</span><span class="meta">Typically ${f.months[0]}–${f.months[0]+f.months[1]} months</span></label>`).join("")}</div></section>`).join("")}
    <div class="nav"><span class="meta" id="fwCount">${sel.size} selected</span><button class="btn" data-step="profile" type="button" id="chooseNext">Next: scoping questions</button></div></div>`;
   wireFwChecks();
@@ -1050,7 +1124,7 @@ function defaultFw(p){return screenAll(p).filter(s=>s.lvl==="required"||s.lvl===
 let items=[];
 let mode="local", col=null;
 let exampleWork=clone(EXAMPLE);
-const CFG_DEFAULT={firm:"",email:"",phone:"",rate:1200,response:"within 1 working day",showCost:true};
+const CFG_DEFAULT={firm:"Parang",email:"",phone:"",rate:1200,response:"within 1 working day",showCost:true};
 let cfg=(()=>{try{return {...CFG_DEFAULT,...JSON.parse(localStorage.getItem("iso27k-cfg")||"{}")}}catch(e){return {...CFG_DEFAULT}}})();
 let isConsultant=false, leadsRemote=[], leadsMode="local", deskTab="leads", curLead=null, leadSent={};
 let view="home", cur=null, step="profile", repTab="overview", soaFilter="all", soaTheme="all", libTab="frameworks", libQ="", libFam="all", pendingDelete=null;
@@ -1141,6 +1215,12 @@ const fwChips=ids=>ids.map(id=>`<span class="fwchip">${esc(FW_BY_ID[id].short)}<
 const lvlPill=l=>l?`<span class="pill L-${l}">${LEVELS[l]}</span>`:"";
 const bar=(pct)=>`<span class="mini"><span>${pct}%</span><span class="track"><i style="width:${pct}%"></i></span></span>`;
 
+/* ===================== Icons ===================== */
+const FAM_IC={"Cybersecurity":["shield","blue"],"Privacy":["lock","purple"],"Resilience and availability":["cycle","orange"],"AI and cloud":["cloud","teal"],"Sector":["building","indigo"],"Sustainability":["leaf","green"]};
+const PATH_IC={guided:["compass","teal"],request:["stopwatch","orange"],direct:["target","rose"],full:["checklist","blue"]};
+const tile=(n,c,cls="")=>`<span class="tile ${cls} c-${c}" aria-hidden="true"><svg class="ic"><use href="#i-${n}"/></svg></span>`;
+const famTile=(fm,cls="")=>{const [n,c]=FAM_IC[fm]||["shield","blue"];return tile(n,c,cls)};
+
 /* ===================== Navigation ===================== */
 function setNav(){
   $("#nav-home").setAttribute("aria-current",view==="home"||view==="assess"?"page":"false");
@@ -1176,10 +1256,10 @@ function renderHome(){
    <h2 style="margin:24px 0 10px;font-size:1.05rem">Example</h2>
    <div class="list">${row(exampleWork)}</div>
    <div class="how">
-     <div><b>1 · Business</b><strong>22 questions</strong><span class="meta">Customers, regulators, data, technology and footprint.</span></div>
-     <div><b>2 · Frameworks</b><strong>${FRAMEWORKS.length} checked</strong><span class="meta">Each one marked required, recommended or optional, with the reason.</span></div>
-     <div><b>3 · Practices</b><strong>Answer once</strong><span class="meta">Each answer counts towards every framework that shares it.</span></div>
-     <div><b>4 · Report</b><strong>Per framework and combined</strong><span class="meta">Readiness, ranked gaps, cost, timeline and a roadmap.</span></div>
+     <div>${tile("building","indigo")}<b>1 · Business</b><strong>22 questions</strong><span class="meta">Customers, regulators, data, technology and footprint.</span></div>
+     <div>${tile("checklist","blue")}<b>2 · Frameworks</b><strong>${FRAMEWORKS.length} checked</strong><span class="meta">Each one marked required, recommended or optional, with the reason.</span></div>
+     <div>${tile("gauge","green")}<b>3 · Practices</b><strong>Answer once</strong><span class="meta">Each answer counts towards every framework that shares it.</span></div>
+     <div>${tile("ranked","orange")}<b>4 · Report</b><strong>Per framework and combined</strong><span class="meta">Readiness, ranked gaps, cost, timeline and a roadmap.</span></div>
    </div>`;
   $("#newBtn").addEventListener("click",()=>{pathPick="new";go("start")});
 }
@@ -1206,7 +1286,7 @@ function renderAssess(){
   if(!st.some(x=>x[0]===step))step=st[0][0];
   $("#view").innerHTML=`
    <div class="wshead"><div class="crumb"><button class="linkbtn" type="button" data-nav="home">← All assessments</button>${a.example?"":`<span class="meta">·</span><button class="linkbtn" type="button" data-change-path>Change approach</button>`}</div>
-     <span class="eyebrow">${esc(PATHS[a.path].name)} route · ${esc(PATHS[a.path].title)}</span>
+     <span class="eyebrow routeline">${tile(PATH_IC[a.path][0],PATH_IC[a.path][1],"sm")}${esc(PATHS[a.path].name)} route · ${esc(PATHS[a.path].title)}</span>
      <h1 id="wsTitle">${esc(nameOf(a))}</h1><span class="meta" id="wsMeta"></span></div>
    ${a.example?`<div class="banner"><span><strong>This is the example.</strong> Changes here aren't saved. Make a copy to keep your edits.</span><button class="btn small" type="button" data-copy="example">Make a copy</button></div>`:""}
    <div class="steps" style="grid-template-columns:repeat(${st.length},minmax(0,1fr))" role="tablist" aria-label="Steps">
@@ -1273,7 +1353,7 @@ function renderFrameworks(){
       <span class="meta">${esc(f.kind)} · ${esc(f.name)}</span>
       ${s.why&&s.why.length?`<ul class="why">${s.why.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`:`<span class="meta">${esc(f.who)}</span>`}</label>`};
   const fam=FAMILIES.map(fm=>{const list=sc.filter(s=>s.f.fam===fm).sort((x,y)=>lvlRank(x.lvl)-lvlRank(y.lvl));
-    return `<section class="fwfam"><h2>${esc(fm)}</h2><div class="fwgrid">${list.map(card).join("")}</div></section>`}).join("");
+    return `<section class="fwfam"><h2 class="famh">${famTile(fm)}${esc(fm)}</h2><div class="fwgrid">${list.map(card).join("")}</div></section>`}).join("");
   const req=sc.filter(s=>s.lvl==="required").length,rec=sc.filter(s=>s.lvl==="recommended").length;
   $("#stepview").innerHTML=`<div class="panel">
     <div class="summarybar"><span><strong>${req}</strong> required · <strong>${rec}</strong> recommended for this business. Tick the ones to assess.</span>
@@ -1806,7 +1886,7 @@ function renderLibrary(){
 function renderFwLib(){
   const shareCount=f=>{const mine=fwPractices(f,{...PROFILE_DEFAULT,work:"hybrid",dev:"both",services:["saas","msp"],availability:"sla",ai:"build",customers:["consumers","gov","fi","hc"],markets:["eu"],payments:"direct",regulated:["mas","moh"]});const others=new Set();FRAMEWORKS.filter(g=>g!==f).forEach(g=>g.domains.forEach(d=>d.ps.forEach(id=>others.add(id))));return{n:mine.length,shared:mine.filter(id=>others.has(id)).length}};
   $("#libview").innerHTML=`<div class="filters" id="famF" style="margin-bottom:12px">${[["all","All"],...FAMILIES.map(f=>[f,f])].map(([v,l])=>`<button class="chip" data-fam="${esc(v)}" aria-pressed="${libFam===v}" type="button">${esc(l)}</button>`).join("")}</div>
-   <div class="libgrid">${FRAMEWORKS.filter(f=>libFam==="all"||f.fam===libFam).map(f=>{const s=shareCount(f);return `<section class="card libcard"><div><span class="eyebrow">${esc(f.fam)} · ${esc(f.kind)}</span><h2>${esc(f.short)}</h2><span class="meta">${esc(f.name)}</span></div>
+   <div class="libgrid">${FRAMEWORKS.filter(f=>libFam==="all"||f.fam===libFam).map(f=>{const s=shareCount(f);return `<section class="card libcard"><div class="libtop">${famTile(f.fam)}<div><span class="eyebrow">${esc(f.fam)} · ${esc(f.kind)}</span><h2>${esc(f.short)}</h2><span class="meta">${esc(f.name)}</span></div></div>
      <p style="margin:0">${esc(f.what)}</p>
      <dl class="kv small"><dt>Who needs it</dt><dd>${esc(f.who)}</dd><dt>Issued by</dt><dd>${esc(f.issuer)}</dd><dt>Typical time</dt><dd>${f.months[0]}–${f.months[0]+f.months[1]} months</dd><dt>Shared work</dt><dd>${s.shared} of ${s.n} practices also count for other frameworks</dd></dl>
      <div class="ctrls">${f.domains.map(d=>`<span class="cid">${esc(d.n)}</span>`).join("")}</div></section>`}).join("")}</div>`;

@@ -20,14 +20,15 @@ def page(head_html, body_html):
 # Tool
 js = "\n".join(read(f) for f in ["controls.js", "catalogue.js", "engine.js", "flows.js", "app.js"])
 style = f"<style>\n{read('styles.css')}</style>\n"
-body = f"{read('body.html')}<script>\n{js}</script>\n"
+body = f"{read('icons.svg')}{read('body.html')}<script>\n{js}</script>\n"
 Path("artifact.html").write_text(read("head.html") + style + body)
 site_body = body.replace('<nav class="appnav" aria-label="Main">',
                          '<nav class="appnav" aria-label="Main">\n      <a href="index.html" class="navhome">About</a>', 1)
-Path("check.html").write_text(page(read("head.html") + style, site_body))
+Path("check.html").write_text(page('<link rel="icon" href="favicon.svg" type="image/svg+xml">\n' + read("head.html") + style, site_body))
 
 # Front page: everything before </style> goes in <head>
 landing = read("landing.html")
 cut = landing.index("</style>") + len("</style>")
-Path("index.html").write_text(page(landing[:cut] + "\n", landing[cut:].lstrip()))
+FAVICON = '<link rel="icon" href="favicon.svg" type="image/svg+xml">\n'
+Path("index.html").write_text(page(FAVICON + landing[:cut] + "\n", read("icons.svg") + landing[cut:].lstrip()))
 print("Built index.html, check.html and artifact.html")

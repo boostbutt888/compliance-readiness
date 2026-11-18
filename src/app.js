@@ -24,7 +24,7 @@ function defaultFw(p){return screenAll(p).filter(s=>s.lvl==="required"||s.lvl===
 let items=[];
 let mode="local", col=null;
 let exampleWork=clone(EXAMPLE);
-const CFG_DEFAULT={firm:"",email:"",phone:"",rate:1200,response:"within 1 working day",showCost:true};
+const CFG_DEFAULT={firm:"Parang",email:"",phone:"",rate:1200,response:"within 1 working day",showCost:true};
 let cfg=(()=>{try{return {...CFG_DEFAULT,...JSON.parse(localStorage.getItem("iso27k-cfg")||"{}")}}catch(e){return {...CFG_DEFAULT}}})();
 let isConsultant=false, leadsRemote=[], leadsMode="local", deskTab="leads", curLead=null, leadSent={};
 let view="home", cur=null, step="profile", repTab="overview", soaFilter="all", soaTheme="all", libTab="frameworks", libQ="", libFam="all", pendingDelete=null;
@@ -115,6 +115,12 @@ const fwChips=ids=>ids.map(id=>`<span class="fwchip">${esc(FW_BY_ID[id].short)}<
 const lvlPill=l=>l?`<span class="pill L-${l}">${LEVELS[l]}</span>`:"";
 const bar=(pct)=>`<span class="mini"><span>${pct}%</span><span class="track"><i style="width:${pct}%"></i></span></span>`;
 
+/* ===================== Icons ===================== */
+const FAM_IC={"Cybersecurity":["shield","blue"],"Privacy":["lock","purple"],"Resilience and availability":["cycle","orange"],"AI and cloud":["cloud","teal"],"Sector":["building","indigo"],"Sustainability":["leaf","green"]};
+const PATH_IC={guided:["compass","teal"],request:["stopwatch","orange"],direct:["target","rose"],full:["checklist","blue"]};
+const tile=(n,c,cls="")=>`<span class="tile ${cls} c-${c}" aria-hidden="true"><svg class="ic"><use href="#i-${n}"/></svg></span>`;
+const famTile=(fm,cls="")=>{const [n,c]=FAM_IC[fm]||["shield","blue"];return tile(n,c,cls)};
+
 /* ===================== Navigation ===================== */
 function setNav(){
   $("#nav-home").setAttribute("aria-current",view==="home"||view==="assess"?"page":"false");
@@ -150,10 +156,10 @@ function renderHome(){
    <h2 style="margin:24px 0 10px;font-size:1.05rem">Example</h2>
    <div class="list">${row(exampleWork)}</div>
    <div class="how">
-     <div><b>1 · Business</b><strong>22 questions</strong><span class="meta">Customers, regulators, data, technology and footprint.</span></div>
-     <div><b>2 · Frameworks</b><strong>${FRAMEWORKS.length} checked</strong><span class="meta">Each one marked required, recommended or optional, with the reason.</span></div>
-     <div><b>3 · Practices</b><strong>Answer once</strong><span class="meta">Each answer counts towards every framework that shares it.</span></div>
-     <div><b>4 · Report</b><strong>Per framework and combined</strong><span class="meta">Readiness, ranked gaps, cost, timeline and a roadmap.</span></div>
+     <div>${tile("building","indigo")}<b>1 · Business</b><strong>22 questions</strong><span class="meta">Customers, regulators, data, technology and footprint.</span></div>
+     <div>${tile("checklist","blue")}<b>2 · Frameworks</b><strong>${FRAMEWORKS.length} checked</strong><span class="meta">Each one marked required, recommended or optional, with the reason.</span></div>
+     <div>${tile("gauge","green")}<b>3 · Practices</b><strong>Answer once</strong><span class="meta">Each answer counts towards every framework that shares it.</span></div>
+     <div>${tile("ranked","orange")}<b>4 · Report</b><strong>Per framework and combined</strong><span class="meta">Readiness, ranked gaps, cost, timeline and a roadmap.</span></div>
    </div>`;
   $("#newBtn").addEventListener("click",()=>{pathPick="new";go("start")});
 }
@@ -180,7 +186,7 @@ function renderAssess(){
   if(!st.some(x=>x[0]===step))step=st[0][0];
   $("#view").innerHTML=`
    <div class="wshead"><div class="crumb"><button class="linkbtn" type="button" data-nav="home">← All assessments</button>${a.example?"":`<span class="meta">·</span><button class="linkbtn" type="button" data-change-path>Change approach</button>`}</div>
-     <span class="eyebrow">${esc(PATHS[a.path].name)} route · ${esc(PATHS[a.path].title)}</span>
+     <span class="eyebrow routeline">${tile(PATH_IC[a.path][0],PATH_IC[a.path][1],"sm")}${esc(PATHS[a.path].name)} route · ${esc(PATHS[a.path].title)}</span>
      <h1 id="wsTitle">${esc(nameOf(a))}</h1><span class="meta" id="wsMeta"></span></div>
    ${a.example?`<div class="banner"><span><strong>This is the example.</strong> Changes here aren't saved. Make a copy to keep your edits.</span><button class="btn small" type="button" data-copy="example">Make a copy</button></div>`:""}
    <div class="steps" style="grid-template-columns:repeat(${st.length},minmax(0,1fr))" role="tablist" aria-label="Steps">
@@ -247,7 +253,7 @@ function renderFrameworks(){
       <span class="meta">${esc(f.kind)} · ${esc(f.name)}</span>
       ${s.why&&s.why.length?`<ul class="why">${s.why.map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`:`<span class="meta">${esc(f.who)}</span>`}</label>`};
   const fam=FAMILIES.map(fm=>{const list=sc.filter(s=>s.f.fam===fm).sort((x,y)=>lvlRank(x.lvl)-lvlRank(y.lvl));
-    return `<section class="fwfam"><h2>${esc(fm)}</h2><div class="fwgrid">${list.map(card).join("")}</div></section>`}).join("");
+    return `<section class="fwfam"><h2 class="famh">${famTile(fm)}${esc(fm)}</h2><div class="fwgrid">${list.map(card).join("")}</div></section>`}).join("");
   const req=sc.filter(s=>s.lvl==="required").length,rec=sc.filter(s=>s.lvl==="recommended").length;
   $("#stepview").innerHTML=`<div class="panel">
     <div class="summarybar"><span><strong>${req}</strong> required · <strong>${rec}</strong> recommended for this business. Tick the ones to assess.</span>
@@ -780,7 +786,7 @@ function renderLibrary(){
 function renderFwLib(){
   const shareCount=f=>{const mine=fwPractices(f,{...PROFILE_DEFAULT,work:"hybrid",dev:"both",services:["saas","msp"],availability:"sla",ai:"build",customers:["consumers","gov","fi","hc"],markets:["eu"],payments:"direct",regulated:["mas","moh"]});const others=new Set();FRAMEWORKS.filter(g=>g!==f).forEach(g=>g.domains.forEach(d=>d.ps.forEach(id=>others.add(id))));return{n:mine.length,shared:mine.filter(id=>others.has(id)).length}};
   $("#libview").innerHTML=`<div class="filters" id="famF" style="margin-bottom:12px">${[["all","All"],...FAMILIES.map(f=>[f,f])].map(([v,l])=>`<button class="chip" data-fam="${esc(v)}" aria-pressed="${libFam===v}" type="button">${esc(l)}</button>`).join("")}</div>
-   <div class="libgrid">${FRAMEWORKS.filter(f=>libFam==="all"||f.fam===libFam).map(f=>{const s=shareCount(f);return `<section class="card libcard"><div><span class="eyebrow">${esc(f.fam)} · ${esc(f.kind)}</span><h2>${esc(f.short)}</h2><span class="meta">${esc(f.name)}</span></div>
+   <div class="libgrid">${FRAMEWORKS.filter(f=>libFam==="all"||f.fam===libFam).map(f=>{const s=shareCount(f);return `<section class="card libcard"><div class="libtop">${famTile(f.fam)}<div><span class="eyebrow">${esc(f.fam)} · ${esc(f.kind)}</span><h2>${esc(f.short)}</h2><span class="meta">${esc(f.name)}</span></div></div>
      <p style="margin:0">${esc(f.what)}</p>
      <dl class="kv small"><dt>Who needs it</dt><dd>${esc(f.who)}</dd><dt>Issued by</dt><dd>${esc(f.issuer)}</dd><dt>Typical time</dt><dd>${f.months[0]}–${f.months[0]+f.months[1]} months</dd><dt>Shared work</dt><dd>${s.shared} of ${s.n} practices also count for other frameworks</dd></dl>
      <div class="ctrls">${f.domains.map(d=>`<span class="cid">${esc(d.n)}</span>`).join("")}</div></section>`}).join("")}</div>`;

@@ -277,3 +277,26 @@ ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;f
 .appnav a.navhome{font:600 .92rem var(--f-body);color:var(--muted);padding:8px 10px;border-radius:var(--r);text-decoration:none}
 .appnav a.navhome:hover{color:var(--fg);background:var(--sunk)}
 .appnav a.navhome:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Parang brand and icon set */
+:root{--blue:#2D6BD2;--blue-s:#E4EDFC;--purple:#7650CC;--purple-s:#EEE8FB;--orange:#CF7A22;--orange-s:#FCEBD8;--teal:#1A8AA0;--teal-s:#DCF1F5;--indigo:#4952C4;--indigo-s:#E6E7FA;--green:#2C8650;--green-s:#DEF1E4;--rose:#C8425A;--rose-s:#FAE3E8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--blue:#7FA9F2;--blue-s:#1B2A44;--purple:#B39AF0;--purple-s:#2A2240;--orange:#F0A75C;--orange-s:#3A2A18;--teal:#6CC9DB;--teal-s:#173238;--indigo:#9AA1F2;--indigo-s:#22254A;--green:#74CE96;--green-s:#1A3324;--rose:#F08B9E;--rose-s:#3E1F27}}
+:root[data-theme="dark"]{--blue:#7FA9F2;--blue-s:#1B2A44;--purple:#B39AF0;--purple-s:#2A2240;--orange:#F0A75C;--orange-s:#3A2A18;--teal:#6CC9DB;--teal-s:#173238;--indigo:#9AA1F2;--indigo-s:#22254A;--green:#74CE96;--green-s:#1A3324;--rose:#F08B9E;--rose-s:#3E1F27}
+.logo{width:30px;height:30px;flex:none;border-radius:8px;box-shadow:0 1px 2px rgba(16,40,34,.2)}
+.brand{font-size:1.15rem}
+.ic{width:24px;height:24px;flex:none;display:inline-block;vertical-align:middle}
+.tile{width:40px;height:40px;border-radius:11px;display:inline-grid;place-items:center;flex:none;background:var(--ts);color:var(--tc)}
+.tile.lg{width:48px;height:48px;border-radius:13px}
+.tile.lg .ic{width:27px;height:27px}
+.tile.sm{width:22px;height:22px;border-radius:6px}
+.tile.sm .ic{width:15px;height:15px}
+.c-blue{--tc:var(--blue);--ts:var(--blue-s)}.c-purple{--tc:var(--purple);--ts:var(--purple-s)}.c-orange{--tc:var(--orange);--ts:var(--orange-s)}
+.c-teal{--tc:var(--teal);--ts:var(--teal-s)}.c-indigo{--tc:var(--indigo);--ts:var(--indigo-s)}.c-green{--tc:var(--green);--ts:var(--green-s)}.c-rose{--tc:var(--rose);--ts:var(--rose-s)}
+.famh{display:flex;align-items:center;gap:10px}
+.famh .tile{width:30px;height:30px;border-radius:8px}
+.famh .tile .ic{width:18px;height:18px}
+.how .tile{margin-bottom:6px}
+.pathcard .tile{margin-bottom:4px}
+.libtop{display:flex;gap:12px;align-items:flex-start}
+.routeline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media (max-width:560px){.appnav{flex-wrap:wrap;gap:0;margin-left:0;width:100%}.appnav button,.appnav a.navhome{padding:6px 8px;font-size:.88rem}}

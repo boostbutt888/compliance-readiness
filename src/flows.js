@@ -174,7 +174,7 @@ function renderChooser(){
    <div class="wshead">${target?`<div class="crumb"><button class="linkbtn" type="button" data-back-assess>← Back to ${esc(nameOf(cur))}</button></div>`:`<div class="crumb"><button class="linkbtn" type="button" data-nav="home">← All assessments</button></div>`}
      <span class="eyebrow">${target?"Change approach":"New assessment"}</span><h1>How can we help?</h1>
      <p class="muted" style="margin:0;max-width:62ch">Choose the route that fits where you are. ${target?"Your answers so far are kept.":"You can switch later without losing answers."}</p></div>
-   <div class="pathgrid">${["guided","request","direct"].map(k=>{const P=PATHS[k];return `<button class="pathcard" type="button" data-path="${k}">
+   <div class="pathgrid">${["guided","request","direct"].map(k=>{const P=PATHS[k];return `<button class="pathcard" type="button" data-path="${k}">${tile(PATH_IC[k][0],PATH_IC[k][1],"lg")}
      <span class="eyebrow">${esc(P.name)} · ${esc(P.time)}</span><strong class="ptitle">${esc(P.title)}</strong><span class="pdesc">${esc(P.desc)}</span>
      <ul class="plain">${P.gets.map(g=>`<li>${esc(g)}</li>`).join("")}</ul><span class="pgo">Start →</span></button>`}).join("")}</div>
    <p class="meta" style="margin-top:14px">Want to screen everything? <button class="linkbtn" type="button" data-path="full">Run the full check of all ${FRAMEWORKS.length} frameworks</button></p>`;
@@ -230,7 +230,7 @@ function renderChoose(){
   const sel=new Set(cur.fw||[]);
   $("#stepview").innerHTML=`<div class="panel">
    <section class="card intro"><h2>Which frameworks do you need?</h2><p class="meta" style="margin:0">Tick one or more. Not sure? <button class="linkbtn" type="button" data-switch="guided">Switch to the guided route</button> and keep your answers.</p></section>
-   ${FAMILIES.map(fm=>`<section class="fwfam"><h2>${esc(fm)}</h2><div class="fwgrid">${FRAMEWORKS.filter(f=>f.fam===fm).map(f=>`<label class="fwcard${sel.has(f.id)?" on":""}"><input type="checkbox" data-fw="${f.id}" id="fw-${f.id}" ${sel.has(f.id)?"checked":""}>
+   ${FAMILIES.map(fm=>`<section class="fwfam"><h2 class="famh">${famTile(fm)}${esc(fm)}</h2><div class="fwgrid">${FRAMEWORKS.filter(f=>f.fam===fm).map(f=>`<label class="fwcard${sel.has(f.id)?" on":""}"><input type="checkbox" data-fw="${f.id}" id="fw-${f.id}" ${sel.has(f.id)?"checked":""}>
      <span class="fwtop"><strong>${esc(f.short)}</strong><span class="meta">${esc(f.kind)}</span></span><span class="meta">${esc(PLAIN[f.id])}</span><span class="meta">Typically ${f.months[0]}–${f.months[0]+f.months[1]} months</span></label>`).join("")}</div></section>`).join("")}
    <div class="nav"><span class="meta" id="fwCount">${sel.size} selected</span><button class="btn" data-step="profile" type="button" id="chooseNext">Next: scoping questions</button></div></div>`;
   wireFwChecks();

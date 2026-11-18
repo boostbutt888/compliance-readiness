@@ -1,6 +1,6 @@
-# Compliance Readiness Check
+# Parang Readiness Check
 
-A self-assessment web app for a risk and compliance consultancy. A business profiles itself once, sees which of 21 cybersecurity, privacy, resilience, AI, sector and sustainability frameworks apply, rates its current practices, and gets a readiness report with gaps, cost, timeline and a roadmap. Leads flow to a consultant desk that generates a call brief for each prospect.
+Website and self-assessment tool for Parang, a Singapore risk and compliance consultancy. "Parang" is the Malay word for a working blade: the idea is to sharpen a business's operations so it can go after the market precisely and decisively. A business profiles itself once, sees which of 21 cybersecurity, privacy, resilience, AI, sector and sustainability frameworks apply, rates its current practices, and gets a readiness report with gaps, cost, timeline and a roadmap. Leads flow to a consultant desk that generates a call brief for each prospect.
 
 ## Run it
 
@@ -46,7 +46,9 @@ src/
   flows.js       entry routes, plan builder, deadline check, expectation content
   app.js         views, storage, reports, contact form, consultant desk and brief
   landing.html   the front page
+  icons.svg      shared icon set and the Parang logo, inlined into every page
 build.py         builds index.html, check.html and artifact.html from src/
+favicon.svg      browser tab icon
 docs/            framework scope, client flows and cost model notes
 ```
 
