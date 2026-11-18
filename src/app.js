@@ -826,4 +826,8 @@ document.addEventListener("keydown",e=>{
   if(e.target.matches(".row[data-open]")){e.preventDefault();openItem(e.target.dataset.open)}
   else if(e.target.matches(".row[data-lead],tr[data-rtab]")){e.preventDefault();e.target.click()}
 });
-go("home");
+/* Start straight into a route when linked as check.html#guided, #request or #direct */
+(function(){let h="";try{h=(location.hash||"").slice(1)}catch(e){}
+  if(PATHS[h]&&h!=="full"){pathPick="new";startPath(h);try{history.replaceState(null,"",location.pathname)}catch(e){}}
+  else go("home");
+})();

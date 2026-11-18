@@ -4,7 +4,10 @@ A self-assessment web app for a risk and compliance consultancy. A business prof
 
 ## Run it
 
-Open `index.html` in a browser. No server or install needed.
+Open `index.html` in a browser for the front page, or `check.html` to go straight to the tool. No server or install needed. Hosted on GitHub Pages, the front page is the site's home page.
+
+- `index.html`: the front page explaining what the consultancy does, how the check helps, the three routes, coverage, how an engagement runs, honest expectations, funding and FAQ. Its route buttons open the tool directly at that route (`check.html#guided`, `#request`, `#direct`).
+- `check.html`: the Readiness Check tool, with an "About" link back to the front page.
 
 - Opened from your own disk (`file://`), the Consultant desk is visible so you can test the full flow. Assessments and leads are saved in that browser's local storage.
 - Hosted on a normal website, visitors see only the prospect side. Leads that can't be sent directly come to you as a reference code (starting `ISO27-`), which you paste into the Consultant desk.
@@ -42,7 +45,8 @@ src/
   engine.js      scoring, gap ranking, cost and timeline model
   flows.js       entry routes, plan builder, deadline check, expectation content
   app.js         views, storage, reports, contact form, consultant desk and brief
-build.py         builds index.html and artifact.html from src/
+  landing.html   the front page
+build.py         builds index.html, check.html and artifact.html from src/
 docs/            framework scope, client flows and cost model notes
 ```
 
