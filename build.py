@@ -22,7 +22,15 @@ js = "\n".join(read(f) for f in ["controls.js", "catalogue.js", "engine.js", "fl
 style = f"<style>\n{read('styles.css')}</style>\n"
 body = f"{read('icons.svg')}{read('body.html')}<script>\n{js}</script>\n"
 Path("artifact.html").write_text(read("head.html") + style + body)
-site_body = body.replace('<nav class="appnav" aria-label="Main">',
+# On the website the logo goes to the front page; in the claude.ai version it stays the tool's home button
+brand_start = body.index('<button class="brand"')
+brand_end = body.index('</button>', brand_start) + len('</button>')
+brand_html = body[brand_start:brand_end]
+site_brand = (brand_html.replace('<button class="brand" type="button" data-nav="home" aria-label="Home">',
+                                 '<a class="brand" href="index.html" aria-label="Parang home page">', 1)
+              .replace('</button>', '</a>'))
+body_site = body[:brand_start] + site_brand + body[brand_end:]
+site_body = body_site.replace('<nav class="appnav" aria-label="Main">',
                          '<nav class="appnav" aria-label="Main">\n      <a href="index.html" class="navhome">About</a>', 1)
 Path("check.html").write_text(page('<link rel="icon" href="favicon.svg" type="image/svg+xml">\n' + read("head.html") + style, site_body))
 
