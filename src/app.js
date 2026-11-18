@@ -115,6 +115,19 @@ const fwChips=ids=>ids.map(id=>`<span class="fwchip">${esc(FW_BY_ID[id].short)}<
 const lvlPill=l=>l?`<span class="pill L-${l}">${LEVELS[l]}</span>`:"";
 const bar=(pct)=>`<span class="mini"><span>${pct}%</span><span class="track"><i style="width:${pct}%"></i></span></span>`;
 
+/* ===================== Who gets paid ===================== */
+const payPill=(k,who)=>k==="parang"?`<span class="pay P-us">Parang</span>`:`<span class="pay P-them">${esc(who||"Third party")}</span>`;
+function payBlock(pf){
+  const third=pf.res.filter(r=>r.ext&&r.ext.hi>0);
+  return `<section class="card paycard"><h2>Who you pay</h2>
+   <p style="margin:0;max-width:70ch">Only consulting goes to Parang. Audits, certificates, ratings and tools are paid by you, directly, to independent providers. Rules for certification bodies stop them from consulting for the companies they certify, so they are always a separate firm.</p>
+   <div class="payrows">
+     <div class="payrow us"><div class="ph">${payPill("parang")}<strong>${range(pf.consult)}</strong></div><span>Consulting: gap fixes, policies, risk assessment, internal audit and audit support. The first 30-minute review is free; the rest is a fixed-fee proposal.</span></div>
+     ${third.map(r=>`<div class="payrow"><div class="ph">${payPill("third",r.ext.who)}<strong>${range(r.ext)}</strong></div><span><b>${esc(r.f.short)}</b>: ${esc(r.ext.label)}. ${esc(r.ext.how||"")}</span></div>`).join("")}
+     ${pf.toolSum.hi>0?`<div class="payrow"><div class="ph">${payPill("third",TOOL_WHO)}<strong>${range(pf.toolSum)}</strong></div><span>Tools some gaps need, such as device management or log monitoring. You choose and buy them; we help you compare options.</span></div>`:""}
+   </div></section>`;
+}
+
 /* ===================== Icons ===================== */
 const FAM_IC={"Cybersecurity":["shield","blue"],"Privacy":["lock","purple"],"Resilience and availability":["cycle","orange"],"AI and cloud":["cloud","teal"],"Sector":["building","indigo"],"Sustainability":["leaf","green"]};
 const PATH_IC={guided:["compass","teal"],request:["stopwatch","orange"],direct:["target","rose"],full:["checklist","blue"]};
@@ -342,7 +355,7 @@ function gapList(gaps,showFw){return gaps.map(g=>`<div class="gap"><span class="
    ${showFw&&g.fws.length?`<div class="ctrls"><span class="meta">Closes gaps in</span>${fwChips(g.fws)}</div>`:""}</div></div>`).join("")||`<p class="muted">No gaps.</p>`}
 
 function overviewBody(a,pf,interactive){
-  const rows=pf.res.map(r=>`<tr${interactive?` class="click" data-rtab="${r.f.id}" tabindex="0"`:""}><td><strong>${esc(r.f.short)}</strong><span class="why">${esc(r.f.kind)}</span></td><td>${lvlPill(r.level)}</td><td style="min-width:120px">${bar(r.readiness)}</td><td class="num">${r.gaps.length}</td><td class="num">~${r.months} mo</td><td class="num">${range({lo:r.fees.lo+(r.ext?r.ext.lo:0),hi:r.fees.hi+(r.ext?r.ext.hi:0)})}</td></tr>`).join("");
+  const rows=pf.res.map(r=>`<tr${interactive?` class="click" data-rtab="${r.f.id}" tabindex="0"`:""}><td><strong>${esc(r.f.short)}</strong><span class="why">${esc(r.f.kind)}</span></td><td>${lvlPill(r.level)}</td><td style="min-width:120px">${bar(r.readiness)}</td><td class="num">${r.gaps.length}</td><td class="num">~${r.months} mo</td><td class="num">${range(r.fees)}</td><td class="num">${r.ext&&r.ext.hi>0?range(r.ext):"—"}</td></tr>`).join("");
   const w=waves(pf);
   const multi=pf.gaps.filter(g=>g.fws.length>1).length;
   return `${situationCard(a,pf)}
@@ -353,8 +366,9 @@ function overviewBody(a,pf,interactive){
      <div class="tile"><span class="v">~${pf.months}<span style="font-size:1rem;font-weight:600"> mo</span></span><span class="k">To complete all (indicative)</span></div>
    </div>
    <section class="card"><h2>Frameworks at a glance</h2>${interactive?'<p class="meta" style="margin:0">Select a row for the detail.</p>':""}
-     <div class="tablewrap"><table><thead><tr><th>Framework</th><th>Status</th><th>Readiness</th><th class="num">Gaps</th><th class="num">Time</th><th class="num">Cost, standalone</th></tr></thead><tbody>${rows}</tbody></table></div>
-     <p class="meta" style="margin:0">Standalone cost covers consulting plus audit or assessment fees for that framework alone. Doing them together costs less: see below.</p></section>
+     <div class="tablewrap"><table><thead><tr><th>Framework</th><th>Status</th><th>Readiness</th><th class="num">Gaps</th><th class="num">Time</th><th class="num">Parang fees</th><th class="num">Paid to auditors</th></tr></thead><tbody>${rows}</tbody></table></div>
+     <p class="meta" style="margin:0">Figures are for each framework on its own. "Parang fees" is our consulting. "Paid to auditors" goes directly to the independent certification body, auditor or assessor, not to Parang. Doing several frameworks together lowers Parang's fees: see below.</p></section>
+   ${payBlock(pf)}
    <section class="card"><h2>Answer once, use many times</h2>
      <p style="margin:0">${pf.shared.length} of your ${pf.ids.length} practices count towards more than one framework, and ${multi} of the gaps close several at once. Running the frameworks as one programme saves about <strong>${Math.round(pf.saved)} consultant days (${money(pf.saved*pf.rate,1000)})</strong> compared with separate projects.</p></section>
    <section class="card"><h2>Suggested order</h2><div class="phases">${w.map(x=>`<div class="phase"><span class="when">Months ${x.from}–${x.to}</span><h3>${esc(x.name)}</h3><ul>${x.rs.map(r=>`<li>${esc(r.f.short)}</li>`).join("")}</ul></div>`).join("")}</div></section>
@@ -384,11 +398,12 @@ function fwBody(a,r,interactive){
      <section class="card">${interactive?`<h2>Statement of Applicability</h2><div class="filters" id="soaF">${[["all","All"],["gaps","Gaps"],["done","In place"],["excluded","Excluded"]].map(([v,l])=>`<button class="chip" data-f="${v}" aria-pressed="${soaFilter===v}" type="button">${l}</button>`).join("")}<span style="width:8px"></span>${[["all","All themes"],...Object.values(THEMES).map(t=>[t,t])].map(([v,l])=>`<button class="chip" data-t="${v}" aria-pressed="${soaTheme===v}" type="button">${l}</button>`).join("")}</div>`:`<h2>Statement of Applicability</h2>`}
        <div class="tablewrap"><table><thead><tr><th>Control</th><th>Title and justification</th><th>Applies</th><th>Status</th></tr></thead><tbody id="soaBody">${interactive?"":soaRows(r.iso.rows)}</tbody></table></div></section>`;
   }
-  const cost=`<div class="tablewrap"><table class="cost"><thead><tr><th>Item</th><th class="num">Low</th><th class="num">High</th></tr></thead><tbody>
-     <tr><td>Consulting, ${r.days} days at ${money(Number(cfg.rate)||1200,50)}/day</td><td class="num">${money(r.fees.lo)}</td><td class="num">${money(r.fees.hi)}</td></tr>
-     ${r.ext&&r.ext.hi>0?`<tr><td>${esc(r.ext.label)}</td><td class="num">${money(r.ext.lo)}</td><td class="num">${money(r.ext.hi)}</td></tr>`:r.ext?`<tr><td>${esc(r.ext.label)}</td><td class="num" colspan="2">not yet required</td></tr>`:`<tr><td>No external audit or certificate</td><td class="num">—</td><td class="num">—</td></tr>`}
-     ${r.recur?`<tr class="sub"><td>${esc(r.recur.label)}</td><td class="num">${money(r.recur.lo)}/yr</td><td class="num">${money(r.recur.hi)}/yr</td></tr>`:""}
-   </tbody></table></div>`;
+  const cost=`<div class="tablewrap"><table class="cost"><thead><tr><th>Item</th><th>Paid to</th><th class="num">Low</th><th class="num">High</th></tr></thead><tbody>
+     <tr><td>Consulting, ${r.days} days at ${money(Number(cfg.rate)||1200,50)}/day</td><td>${payPill("parang")}</td><td class="num">${money(r.fees.lo)}</td><td class="num">${money(r.fees.hi)}</td></tr>
+     ${r.ext&&r.ext.hi>0?`<tr><td>${esc(r.ext.label)}</td><td>${payPill("third",r.ext.who)}</td><td class="num">${money(r.ext.lo)}</td><td class="num">${money(r.ext.hi)}</td></tr>`:r.ext?`<tr><td>${esc(r.ext.label)}</td><td>${payPill("third",r.ext.who)}</td><td class="num" colspan="2">not yet required</td></tr>`:`<tr><td>No external audit or certificate</td><td>—</td><td class="num">—</td><td class="num">—</td></tr>`}
+     ${r.recur?`<tr class="sub"><td>${esc(r.recur.label)}</td><td>${payPill("third",r.recur.who)}</td><td class="num">${money(r.recur.lo)}/yr</td><td class="num">${money(r.recur.hi)}/yr</td></tr>`:""}
+   </tbody></table></div>
+   ${r.ext&&r.ext.how?`<p class="meta" style="margin:0"><strong>About ${esc(r.ext.who.charAt(0).toLowerCase()+r.ext.who.slice(1))}:</strong> ${esc(r.ext.how)}</p>`:""}`;
   return `
    <div class="fwhead"><div><span class="eyebrow">${esc(f.fam)} · ${esc(f.kind)}</span><h2 class="big">${esc(f.name)}</h2><span class="meta">${esc(f.issuer)}</span></div>${lvlPill(r.level)}</div>
    <section class="card"><p style="margin:0">${esc(f.what)}</p>${sv.why&&sv.why.length?`<div><strong>Why it applies to you</strong><ul class="why">${sv.why.map(w=>`<li>${esc(w)}</li>`).join("")}</ul></div>`:""}</section>
@@ -396,7 +411,7 @@ function fwBody(a,r,interactive){
      <div class="tile lead"><span class="v">${r.readiness}%</span><span class="k">Readiness</span></div>
      <div class="tile"><span class="v">${r.gaps.length}</span><span class="k">Gaps (${r.gaps.filter(g=>g.pr==="High").length} high)</span></div>
      <div class="tile"><span class="v">~${r.months}<span style="font-size:1rem;font-weight:600"> mo</span></span><span class="k">To complete, on its own</span></div>
-     <div class="tile"><span class="v">${range({lo:r.fees.lo+(r.ext?r.ext.lo:0),hi:r.fees.hi+(r.ext?r.ext.hi:0)})}</span><span class="k">Cost, on its own</span></div>
+     <div class="tile"><span class="v">${range(r.fees)}</span><span class="k">Parang fees, on its own${r.ext&&r.ext.hi>0?`. Plus ${range(r.ext)} paid to the auditor`:""}</span></div>
    </div>
    <section class="card">${expectBlock(f,r)}</section>
    <section class="card"><h2>Readiness by ${f.id==="iso27001"?"Annex A theme":"requirement area"}</h2>${domainBars(f.id==="iso27001"&&r.iso?r.iso.themes:r.doms)}</section>
@@ -409,7 +424,7 @@ function renderReport(){
   const a=effA(cur);const pf=portfolio(a);
   if(repTab!=="overview"&&!a.fw.includes(repTab))repTab="overview";
   const firm=cfg.firm||"our consultants";
-  const costLine=cfg.showCost?`For a ${esc(a.profile.size)}-staff ${esc(a.profile.industry.toLowerCase())} business at your readiness, the ${pf.res.length} framework${pf.res.length===1?"":"s"} you chose typically cost <strong>${money(pf.year1.lo,1000)}–${money(pf.year1.hi,1000)}</strong> in the first year, all in, over about <strong>${pf.months} months</strong>.`:`For a business like yours, the frameworks you chose typically take about <strong>${pf.months} months</strong>.`;
+  const costLine=cfg.showCost?`For a ${esc(a.profile.size)}-staff ${esc(a.profile.industry.toLowerCase())} business at your readiness, the ${pf.res.length} framework${pf.res.length===1?"":"s"} you chose typically take about <strong>${pf.months} months</strong>. First-year cost: <strong>${range(pf.consult)}</strong> in Parang consulting fees${pf.ext.hi>0?`, plus <strong>${range(pf.ext)}</strong> paid directly to independent auditors and certification bodies`:""}${pf.toolSum.hi>0?`, and about <strong>${range(pf.toolSum)}</strong> for tools from vendors you choose`:""}.`:`For a business like yours, the frameworks you chose typically take about <strong>${pf.months} months</strong>.`;
   const funds=[...new Set(pf.res.map(r=>r.f.fund).filter(Boolean))];
   const tabs=[["overview","Overview"],...pf.res.map(r=>[r.f.id,r.f.short])];
   const body=repTab==="overview"?overviewBody(a,pf,true):fwBody(a,pf.res.find(r=>r.f.id===repTab),true);
@@ -742,14 +757,15 @@ function briefBody(l,pf){
      <tbody>${gapRows||`<tr><td colspan="5" class="muted">No gaps reported.</td></tr>`}
      <tr class="sub"><td></td><td>Framework set-up: scoping, documentation, internal audits and audit support for ${pf.res.length} framework${pf.res.length===1?"":"s"}</td><td class="num">${pf.baseDays}</td><td class="num">${money(pf.baseDays*pf.rate)}</td><td class="num">—</td></tr></tbody></table></div></section>
    <section class="card"><h2>Cost to completion</h2>
-     <div class="tablewrap"><table class="cost"><thead><tr><th>Item</th><th class="num">Low</th><th class="num">High</th></tr></thead><tbody>
-       <tr><td>Consulting fees, ${pf.days} days at ${money(pf.rate,50)} (−10% to +15%)</td><td class="num">${money(pf.consult.lo)}</td><td class="num">${money(pf.consult.hi)}</td></tr>
-       ${pf.res.filter(r=>r.ext&&r.ext.hi>0).map(r=>`<tr><td>${esc(r.f.short)}: ${esc(r.ext.label)}</td><td class="num">${money(r.ext.lo)}</td><td class="num">${money(r.ext.hi)}</td></tr>`).join("")}
-       ${pf.tools.map(x=>`<tr><td>${esc(x.label)} (first year, only where a gap needs it)</td><td class="num">${money(x.lo)}</td><td class="num">${money(x.hi)}</td></tr>`).join("")}
-       <tr class="total"><td>First-year total</td><td class="num">${money(pf.year1.lo,1000)}</td><td class="num">${money(pf.year1.hi,1000)}</td></tr>
-       ${recurs.map(r=>`<tr class="sub"><td>${esc(r.f.short)}: ${esc(r.recur.label)}</td><td class="num">${money(r.recur.lo)}/yr</td><td class="num">${money(r.recur.hi)}/yr</td></tr>`).join("")}
-       <tr><td>Client staff time</td><td class="num" colspan="2">about ${pf.clientDays} person-days</td></tr>
+     <div class="tablewrap"><table class="cost"><thead><tr><th>Item</th><th>Paid to</th><th class="num">Low</th><th class="num">High</th></tr></thead><tbody>
+       <tr><td>Consulting fees, ${pf.days} days at ${money(pf.rate,50)} (−10% to +15%)</td><td>${payPill("parang")}</td><td class="num">${money(pf.consult.lo)}</td><td class="num">${money(pf.consult.hi)}</td></tr>
+       ${pf.res.filter(r=>r.ext&&r.ext.hi>0).map(r=>`<tr><td>${esc(r.f.short)}: ${esc(r.ext.label)}</td><td>${payPill("third",r.ext.who)}</td><td class="num">${money(r.ext.lo)}</td><td class="num">${money(r.ext.hi)}</td></tr>`).join("")}
+       ${pf.tools.map(x=>`<tr><td>${esc(x.label)} (first year, only where a gap needs it)</td><td>${payPill("third",TOOL_WHO)}</td><td class="num">${money(x.lo)}</td><td class="num">${money(x.hi)}</td></tr>`).join("")}
+       <tr class="total"><td>First-year total</td><td></td><td class="num">${money(pf.year1.lo,1000)}</td><td class="num">${money(pf.year1.hi,1000)}</td></tr>
+       ${recurs.map(r=>`<tr class="sub"><td>${esc(r.f.short)}: ${esc(r.recur.label)}</td><td>${payPill("third",r.recur.who)}</td><td class="num">${money(r.recur.lo)}/yr</td><td class="num">${money(r.recur.hi)}/yr</td></tr>`).join("")}
+       <tr><td>Client staff time</td><td>Internal</td><td class="num" colspan="2">about ${pf.clientDays} person-days</td></tr>
      </tbody></table></div>
+     <p style="margin:0"><strong>Say this on the call:</strong> only the consulting line is Parang's fee. Audit, certification and tool costs go straight to independent providers the client contracts with. Certification bodies can't consult for the companies they certify, so they are always separate from us.</p>
      <p class="meta" style="margin:0">Indicative. Audit, assessment and tool prices vary by provider; confirm scope and quotes before proposing.</p></section>
    <section class="card"><h2>Other obligations to raise</h2><div class="oblig">${obligations(l).map(([ti,d])=>`<div><strong>${ti}</strong><span class="muted" style="font-size:.93rem">${d}</span></div>`).join("")||'<div><span class="muted">None flagged.</span></div>'}</div></section>`;
 }

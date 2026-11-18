@@ -86,8 +86,8 @@ function fwResult(f,a){
   const sizeAdd=[0,0,1,2,3][si];
   const months=Math.max(f.months[0],Math.min(f.months[0]+f.months[1]+3,Math.round(f.months[0]+(1-readiness/100)*f.months[1]+sizeAdd*(f.months[1]>=5?1:.5))));
   const days=Math.round((f.base[si]+gaps.reduce((s,g)=>s+g.days*depth(f),0))*2)/2;
-  const ext=f.ext?f.ext(si,p):null;
-  const recur=f.recur?f.recur(si,p):null;
+  const ext=f.ext?{...f.ext(si,p),who:(PAYEE[f.id]||{}).who,how:(PAYEE[f.id]||{}).how}:null;
+  const recur=f.recur?{...f.recur(si,p),who:RECUR_WHO[f.id]||(PAYEE[f.id]||{}).who}:null;
   return{f,ids,doms,readiness,iso,gaps,months,days,fees:{lo:days*rate*.9,hi:days*rate*1.15},ext,recur,level:levelOf(a,f),answered:ids.filter(id=>a.answers[id]).length};
 }
 function portfolio(a){

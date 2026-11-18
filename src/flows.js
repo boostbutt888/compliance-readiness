@@ -82,7 +82,7 @@ const JOURNEY={
 const journeyFor=f=>JOURNEY[f.kind]||JOURNEY[f.kind.startsWith("Regulation")||f.kind==="Contractual"?"Regulation":"Certification"];
 const PROFILE_NEEDS={iso27001:["services","suppliers","it"],ce:["it","suppliers","ai"],ct:["it","suppliers","ai"],soc2:["markets","services","availability"],pci:["payments"],nist:["it"],pdpa:["customers"],gdpr:["markets"],iso27701:["markets","services"],iso22301:["availability"],mas:["regulated","customers"],iso20000:["services","availability"],iso42001:["ai"],cloud:["services"],health:["regulated"],im8:["customers"],ghg:["footprint","esgAsk"],iso14001:["footprint","esgAsk"],iso50001:["footprint"],issb:["footprint","esgAsk"],ecovadis:["footprint","esgAsk"]};
 const CORE_Q=["name","industry","size","status","customers","driver","work","hosting","dev","data"];
-const NOT_INCLUDED=["Audit, certification and rating fees: you pay the auditor or provider directly","Software and tools, such as device management or carbon accounting","Hands-on IT changes: we specify them; your IT team or vendor implements","Legal opinions on contracts or regulations"];
+const NOT_INCLUDED=["Audit, certification and rating fees: you pay the independent auditor, certification body or rating provider directly, not Parang","Software and tools, such as device management or carbon accounting","Hands-on IT changes: we specify them; your IT team or vendor implements","Legal opinions on contracts or regulations"];
 const YOU_GET=["Policies, procedures and registers written for your business","Risk and impact assessments run with your team","Evidence pack organised for the auditor or assessor","Staff awareness session","Internal audit or readiness review before the external one","Support during audits, and help closing any findings"];
 const SURPRISES=["Self-assessments are usually optimistic. We validate a sample of your \"Yes\" answers before quoting.","Certificates need months of records. The audit date can't be pulled forward by working harder.","There are yearly costs after year one: surveillance audits, renewals and tools.","Scope drives cost. Covering one service or site first is often faster and cheaper.","A certificate shows you manage risk. It doesn't guarantee you won't have an incident."];
 
@@ -129,7 +129,8 @@ function expectBlock(f,r){
   const j=journeyFor(f);
   return `<div class="journey"><h3>What you're getting into</h3><ol class="jlist">${j.map(([s,d])=>`<li><span>${esc(s)}</span>${d?`<span class="meta">${esc(d)}</span>`:""}</li>`).join("")}</ol>
    <dl class="kv small">
-     <dt>Paid separately</dt><dd>${r.ext&&r.ext.hi>0?`${esc(r.ext.label)}: ${range(r.ext)}`:r.ext?esc(r.ext.label):"No external audit fee"}</dd>
+     <dt>Paid to Parang</dt><dd>Consulting: ${range(r.fees)}</dd>
+     <dt>Paid directly to others</dt><dd>${r.ext&&r.ext.hi>0?`${esc(r.ext.who)}: ${esc(r.ext.label)}, ${range(r.ext)}. ${esc(r.ext.how||"")}`:r.ext?`${esc(r.ext.who||"")}: ${esc(r.ext.label)}`:"No external audit or certificate fee"}</dd>
      ${r.recur?`<dt>Every year after</dt><dd>${esc(r.recur.label)}: ${money(r.recur.lo,500)}–${money(r.recur.hi,500).replace("S$","")}</dd>`:""}
      <dt>If time is short</dt><dd>${(INTERIM[f.id]||["Ask about a narrower first scope"]).map(esc).join(". ")}.</dd>
    </dl></div>`;
@@ -251,7 +252,7 @@ function renderPlan(){
      <span>${esc(PLAIN[c.f.id])}</span>
      ${c.why.length?`<ul class="why">${c.why.slice(0,2).map(w=>`<li>${esc(w)}</li>`).join("")}</ul>`:""}
      ${c.gm?`<span class="meta">Matches ${c.gm} of your goals</span>`:""}
-     <span class="facts"><span><b>~${c.r.months} mo</b> to complete</span><span><b>${range({lo:c.r.fees.lo+(c.r.ext?c.r.ext.lo:0),hi:c.r.fees.hi+(c.r.ext?c.r.ext.hi:0)})}</b> first year</span>${dl!==Infinity?`<span class="feas F-${fz.st}">${FEAS_LABEL[fz.st]}</span>`:""}</span></label>`};
+     <span class="facts"><span><b>~${c.r.months} mo</b> to complete</span><span><b>${range(c.r.fees)}</b> Parang fees</span>${c.r.ext&&c.r.ext.hi>0?`<span><b>${range(c.r.ext)}</b> to the auditor</span>`:""}${dl!==Infinity?`<span class="feas F-${fz.st}">${FEAS_LABEL[fz.st]}</span>`:""}</span></label>`};
   const tier=(t,title,sub,list)=>list.length?`<section class="tier"><div class="tierhead"><h2>${title}</h2><span class="meta">${sub}</span></div><div class="fwgrid">${list.map(c=>card(c,t)).join("")}</div></section>`:"";
   const B=T.B;const bl=(BUDGETS.find(b=>b[0]===it.budget)||[])[1];
   const fit=B===Infinity?"":T.spend<=B?`<div class="note ok">The "Start here" step fits your budget of ${esc(bl)}: about ${money(T.spend,1000)} in the first year.</div>`:`<div class="note warn">The required items alone come to about ${money(T.spend,1000)}, above your budget of ${esc(bl)}. Options: spread the work over two financial years, narrow the scope, or use grant support where eligible.</div>`;

@@ -295,3 +295,28 @@ const FRAMEWORKS=[
 ];
 const FW_BY_ID={};FRAMEWORKS.forEach(f=>FW_BY_ID[f.id]=f);
 const FUNDING={cyber:"CSA's CISO-as-a-Service scheme co-funds up to 70% of cybersecurity consultancy for eligible SMEs (check current eligibility).",sust:"PSG carbon management solutions (pre-scoped carbon accounting tools) and the SME Sustainability Hub support carbon work (check current eligibility)."};
+
+/* ===================== Who gets paid =====================
+   Only consulting fees go to Parang. Audit, certification, assessment, rating and tool fees
+   are paid by the client directly to independent third parties. */
+const CB_WHO={who:"An accredited certification body",how:"Pick one accredited by the Singapore Accreditation Council (SAC) or another IAF member body. Rules for certification bodies (ISO/IEC 17021-1) stop them from consulting for the companies they certify, so they are always a separate firm from Parang."};
+const PAYEE={
+ iso27001:CB_WHO, iso27701:CB_WHO, iso22301:CB_WHO, iso20000:CB_WHO, iso14001:CB_WHO, iso50001:CB_WHO,
+ iso42001:{who:"An accredited certification body",how:"Pick one accredited for ISO/IEC 42001 by SAC or another IAF member body. It must be independent of your consultant."},
+ cloud:{who:"An accredited certification body",how:"MTCS SS 584 and the ISO 27017/27018 extensions are audited by SAC-accredited certification bodies, usually alongside your ISO 27001 audit."},
+ ce:{who:"A CSA-appointed certification body",how:"The Cyber Security Agency of Singapore appoints independent bodies to assess and certify its marks. You book and pay them directly."},
+ ct:{who:"A CSA-appointed certification body",how:"The Cyber Security Agency of Singapore appoints independent bodies to assess and certify its marks. You book and pay them directly."},
+ soc2:{who:"A licensed CPA firm",how:"Only a licensed CPA (audit) firm can issue a SOC 2 report under AICPA standards. You engage and pay them directly."},
+ pci:{who:"A PCI-listed Qualified Security Assessor (QSA)",how:"QSAs and Approved Scanning Vendors (ASVs) are listed by the PCI Security Standards Council. Self-assessment questionnaires go to your acquiring bank or payment provider."},
+ pdpa:{who:"An IMDA-appointed DPTM certification body",how:"Only needed if you pursue the Data Protection Trustmark. PDPA compliance itself has no certification fee."},
+ gdpr:{who:"An EU representative service, if required",how:"Firms outside the EU that target EU residents may need a representative in the EU. There is no GDPR certificate to buy."},
+ mas:{who:"An independent audit firm",how:"MAS expects independent audits of technology risk. There is no MAS certificate; your internal or external auditor carries out the review."},
+ health:{who:"An independent penetration testing firm",how:"Testing is done by a specialist firm you engage directly. Many buyers ask for CREST-accredited testers."},
+ im8:{who:"An independent penetration testing firm",how:"Agencies usually require testing by an independent firm before go-live. Many ask for CREST-accredited testers."},
+ ghg:{who:"An accredited verification body, if needed",how:"Third-party verification (ISO 14064-3) is done by a body accredited under ISO 14065, for example by SAC. Many customers accept unverified figures at first."},
+ issb:{who:"An external assurance provider, from FY2029",how:"Limited assurance on Scope 1 and 2 must come from an ACRA-registered audit firm or a SAC-accredited testing, inspection and certification firm."},
+ ecovadis:{who:"EcoVadis",how:"You subscribe to EcoVadis directly. The fee depends on your company size and plan."}
+};
+const RECUR_WHO={ghg:"Carbon accounting software vendor you choose",pci:"An Approved Scanning Vendor (ASV)",soc2:"A licensed CPA firm",ecovadis:"EcoVadis"};
+const TOOL_WHO="Software and service vendors you choose";
+const PARANG_WHO="Parang";

@@ -300,3 +300,15 @@ ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px;f
 .libtop{display:flex;gap:12px;align-items:flex-start}
 .routeline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 @media (max-width:560px){.appnav{flex-wrap:wrap;gap:0;margin-left:0;width:100%}.appnav button,.appnav a.navhome{padding:6px 8px;font-size:.88rem}}
+
+/* Who gets paid */
+.pay{display:inline-block;font:600 .74rem var(--f-body);border-radius:999px;padding:2px 9px;white-space:normal;line-height:1.35}
+.pay.P-us{background:var(--accent);color:var(--on-accent)}
+.pay.P-them{background:var(--sunk);color:var(--fg);border:1px solid var(--line)}
+.payrows{display:flex;flex-direction:column}
+.payrow{display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:6px 18px;padding:12px 0;border-top:1px solid var(--line);font-size:.93rem}
+.payrow:first-child{border-top:0}
+.payrow .ph{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.payrow .ph strong{font-variant-numeric:tabular-nums}
+.payrow.us{background:var(--accent-soft);margin:0 -16px;padding:12px 16px;border-radius:var(--r);border-top:0}
+@media (max-width:640px){.payrow{grid-template-columns:1fr}}

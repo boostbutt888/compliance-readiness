@@ -196,6 +196,22 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
 .trio p{color:var(--muted);font-size:.95rem}
 .endlogo{width:56px;height:56px;border-radius:15px;box-shadow:var(--shadow)}
 .fbrand{display:inline-flex;align-items:center;gap:8px}
+
+/* Where your money goes */
+.moneygrid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:16px;align-items:start}
+@media (max-width:900px){.moneygrid{grid-template-columns:1fr}}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow);min-width:0}
+.mcard.us{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),var(--shadow)}
+.mtop{display:flex;gap:14px;align-items:center}
+.mtop h3{font-size:1.3rem}
+.mlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.mlist li{display:flex;gap:8px;align-items:baseline}
+.mlist .ic{color:var(--good);position:relative;top:2px}
+.payees{margin:0;display:grid;grid-template-columns:minmax(0,190px) 1fr;gap:10px 18px;font-size:.93rem}
+.payees dt{font-weight:700}
+.payees dd{margin:0;color:var(--muted)}
+@media (max-width:560px){.payees{grid-template-columns:1fr;gap:2px}.payees dd{margin-bottom:10px}}
+.mnote{margin-top:16px}
 </style>
 
 <header class="bar">
@@ -208,6 +224,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <a class="opt" href="#how">How it works</a>
       <a class="opt" href="#cover">What we cover</a>
       <a class="opt" href="#working">Working with us</a>
+      <a class="opt" href="#fees">Fees</a>
       <a class="opt" href="#faq">FAQ</a>
     </nav>
     <a class="btn small" href="check.html">Start the free check</a>
@@ -287,7 +304,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
         <div><span class="tile c-blue"><svg class="ic" aria-hidden="true"><use href="#i-checklist"/></svg></span><h3>What applies to you</h3><p>Each framework marked required, requested, recommended or optional, with the reason in plain words.</p></div>
         <div><span class="tile c-green"><svg class="ic" aria-hidden="true"><use href="#i-gauge"/></svg></span><h3>Readiness for each one</h3><p>A score by requirement area, from your own answers. For ISO 27001, a draft Statement of Applicability for all 93 controls.</p></div>
         <div><span class="tile c-orange"><svg class="ic" aria-hidden="true"><use href="#i-ranked"/></svg></span><h3>Gaps, ranked</h3><p>What to fix first, how much effort it takes, and which standards each fix moves forward.</p></div>
-        <div><span class="tile c-purple"><svg class="ic" aria-hidden="true"><use href="#i-coins"/></svg></span><h3>Cost and time</h3><p>Consulting, audit fees and tools, shown separately, with months to complete and the saving from doing them together.</p></div>
+        <div><span class="tile c-purple"><svg class="ic" aria-hidden="true"><use href="#i-coins"/></svg></span><h3>Cost and time</h3><p>Parang's consulting fees, and the fees you'd pay independent auditors and tool vendors, shown separately with months to complete.</p></div>
         <div><span class="tile c-teal"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg></span><h3>Deadline and budget fit</h3><p>Whether your plan fits, and what to do if it doesn't: phasing, a narrower scope, or interim evidence.</p></div>
         <div><span class="tile c-indigo"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg></span><h3>Downloads</h3><p>The full report, a gap register and an ISO 27001 Statement of Applicability you can share internally.</p></div>
       </div>
@@ -321,12 +338,44 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
     </div>
   </section>
 
+  <section class="s money" id="fees" aria-labelledby="fees-h">
+    <div class="wrap">
+      <div class="shead"><span class="eyebrow">Where your money goes</span><h2 id="fees-h">Parang charges for consulting. Audits are paid to independent bodies.</h2><p class="lede">Certification only counts if the auditor is independent. International rules (ISO/IEC 17021-1) stop certification bodies from consulting for the companies they certify, so the firm that helps you prepare can never be the firm that certifies you. Every report from the check shows the two separately.</p></div>
+      <div class="moneygrid">
+        <div class="mcard us">
+          <div class="mtop"><span class="tile lg c-green"><svg class="ic" aria-hidden="true"><use href="#i-blade"/></svg></span><div><span class="eyebrow">Paid to Parang</span><h3>Consulting</h3></div></div>
+          <ul class="mlist">
+            <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Free 30-minute review of your check</li>
+            <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Fixed-fee proposal before any work starts</li>
+            <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Gap fixes, policies, risk assessments and staff briefings</li>
+            <li><svg class="ic xs" aria-hidden="true"><use href="#i-check"/></svg>Internal audit and support through your external audit</li>
+          </ul>
+        </div>
+        <div class="mcard them">
+          <div class="mtop"><span class="tile lg c-indigo"><svg class="ic" aria-hidden="true"><use href="#i-seal"/></svg></span><div><span class="eyebrow">Paid by you, directly to them</span><h3>Independent auditors and providers</h3></div></div>
+          <dl class="payees">
+            <dt>ISO certificates</dt><dd>27001, 27701, 22301, 20000-1, 42001, 14001, 50001, MTCS: a certification body accredited by the Singapore Accreditation Council (SAC) or another IAF member.</dd>
+            <dt>CSA Cyber Essentials and Cyber Trust</dt><dd>A certification body appointed by the Cyber Security Agency of Singapore.</dd>
+            <dt>SOC 2 report</dt><dd>A licensed CPA (audit) firm.</dd>
+            <dt>PCI DSS</dt><dd>A Qualified Security Assessor and Approved Scanning Vendor listed by the PCI Security Standards Council. Self-assessments go to your bank or payment provider.</dd>
+            <dt>Data Protection Trustmark</dt><dd>An IMDA-appointed certification body. PDPA compliance itself has no certificate fee.</dd>
+            <dt>Penetration tests</dt><dd>An independent testing firm. Many buyers ask for CREST-accredited testers.</dd>
+            <dt>Carbon verification and climate assurance</dt><dd>A verification body accredited under ISO 14065, or for listed firms an ACRA-registered audit firm or SAC-accredited assurance provider.</dd>
+            <dt>EcoVadis rating</dt><dd>EcoVadis, by subscription.</dd>
+            <dt>Software and tools</dt><dd>Vendors you choose, such as device management or carbon accounting software.</dd>
+          </dl>
+        </div>
+      </div>
+      <p class="meta mnote">We'll help you compare quotes from auditors and vendors, but you contract and pay them yourself. Their fees are never part of Parang's invoice.</p>
+    </div>
+  </section>
+
   <section class="s honest" aria-labelledby="honest-h">
     <div class="wrap">
       <div class="shead"><span class="eyebrow">Straight answers</span><h2 id="honest-h">What we won't promise.</h2><p class="lede">A sharp plan starts with realistic expectations. These are the things clients most often wish they'd known earlier.</p></div>
       <div class="truths">
         <div><svg class="ic" aria-hidden="true"><use href="#i-hourglass"/></svg><span><h3>Certificates can't be rushed</h3><p>Auditors need to see your controls running, usually for at least 3 months. Working harder doesn't move the audit date.</p></span></div>
-        <div><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg><span><h3>Audit fees are separate</h3><p>You pay the certification body or auditor directly. We show their fees up front so the total isn't a surprise.</p></span></div>
+        <div><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg><span><h3>Audit fees don't go to us</h3><p>You pay the certification body or auditor directly, and they must be independent of us. We show their likely fees up front so the total isn't a surprise.</p></span></div>
         <div><svg class="ic" aria-hidden="true"><use href="#i-people"/></svg><span><h3>Your team still has work to do</h3><p>We do the drafting, but someone inside needs a few hours a week to make decisions and gather evidence. The report tells you roughly how many.</p></span></div>
         <div><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><span><h3>Self-assessments are optimistic</h3><p>Most people rate themselves higher than an auditor would. We check a sample of your answers before quoting.</p></span></div>
         <div><svg class="ic" aria-hidden="true"><use href="#i-repeat"/></svg><span><h3>There are costs after year one</h3><p>Surveillance audits, renewals and tools carry on. We list them alongside the first-year figure.</p></span></div>
@@ -351,6 +400,7 @@ svg.c-blue,svg.c-purple,svg.c-green{color:var(--tc)}
       <div class="faq">
         <details><summary>Is the check really free?</summary><p>Yes. The check, the report and the downloads are free, with no sign-up. You only talk to us if you choose to send your report.</p></details>
         <details><summary>What happens to my answers?</summary><p>They're saved in your own browser on this device. Nothing is sent to us unless you fill in the contact form and choose to send it.</p></details>
+        <details><summary>Are the audit and certification fees paid to Parang?</summary><p>No. Parang only charges for consulting. Certification bodies, audit firms, assessors, rating providers and tool vendors are independent of us, and you pay them directly. Each report shows Parang's fees and third-party fees on separate lines.</p></details>
         <details><summary>How accurate are the cost and time estimates?</summary><p>They're indicative, based on your company size and how ready you say you are. We confirm scope and give a fixed fee after the free review and evidence check.</p></details>
         <details><summary>Do I need to be technical?</summary><p>No. The questions are in plain language. If you're not sure, answer "Partly" and we'll check it together.</p></details>
         <details><summary>We only need one certificate. Is this overkill?</summary><p>Use the Direct route: pick the one you need, answer a few scoping questions, and skip straight to a quote if you like.</p></details>
